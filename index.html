@@ -1810,6 +1810,7 @@ function mostrarModulo(nombre){
   }
 
   function setLanguage(lang) {
+    
     currentLang = translations[lang] ? lang : "es";
     const dict = translations[currentLang];
 
@@ -1823,7 +1824,7 @@ function mostrarModulo(nombre){
       if (dict[key]) el.textContent = dict[key];
     });
 
-    document.title = "Área Profesional B2B · Abuela Tata";
+    document.title = "Área Profesional· Navy & Blue B2B · 2027";
 
     const savedEmail = userEmail.getAttribute("data-email");
     if (savedEmail) {
