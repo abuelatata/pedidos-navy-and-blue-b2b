@@ -1,0 +1,2440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Navy & Blue B2B · 2027</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/png" href="./assets/logo.png">
+<link rel="apple-touch-icon" href="./assets/logo.png">  
+<meta name="theme-color" content="#d8b15f">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+<style>
+#avisosBtn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:55px;
+  height:55px;
+  background:#d8b15f;
+  color:white;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.2);
+  cursor:pointer;
+  z-index:9999;
+  border:none;
+}
+
+#avisosPanel{
+  position:fixed;
+  bottom:-100%;
+  left:0;
+  width:100%;
+  height:60%;
+  background:#fffaf4;
+  box-shadow:0 -10px 30px rgba(0,0,0,0.2);
+  border-radius:20px 20px 0 0;
+  transition:bottom .3s ease;
+  z-index:9998;
+  overflow:auto;
+}
+
+#avisosPanel.activo{
+  bottom:0;
+}
+
+.avisosContenido{
+  padding:20px;
+  color:#5a4636;
+}
+
+.avisosContenido h3{
+  margin:0 0 14px;
+  font-size:24px;
+  line-height:1.2;
+}
+
+.avisosContenido p{
+  margin:0 0 12px;
+  font-size:16px;
+  line-height:1.5;
+}
+
+.avisosContenido button{
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(180deg, #e2be6f, #cea24a);
+  color:#fff;
+  font:inherit;
+  font-weight:700;
+  padding:12px 18px;
+  cursor:pointer;
+  box-shadow:0 8px 18px rgba(60,40,25,.10);
+}
+
+:root{
+  --bg:#f5f1ea;
+  --card:#ffffff;
+  --ink:#5a4636;
+  --muted:#8c7765;
+  --line:#e7ddd2;
+  --accent:#d8b15f;
+  --accent-2:#d9e8e6;
+  --shadow:0 10px 28px rgba(60,40,25,.10);
+  --radius:18px;
+}
+
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100%;
+}
+
+body{
+  font-family:Georgia, serif;
+  background:var(--bg);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+/* SPLASH PREMIUM */
+#splash{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#f5efe6;
+  opacity:1;
+  visibility:visible;
+  transition:opacity .7s ease, visibility .7s ease;
+}
+
+#splash.hide{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+.splash-bg{
+  position:absolute;
+  inset:0;
+  background-image:url("images/portada-area.jpg");
+  background-size:cover;
+  background-position:center center;
+  transform:scale(1.08);
+  filter:blur(18px) saturate(.95) brightness(.9);
+}
+
+.splash-bg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg, rgba(245,239,230,.18), rgba(245,239,230,.42)),
+    rgba(60,40,25,.14);
+}
+
+.splash-content{
+  position:relative;
+  z-index:2;
+  width:min(92vw, 760px);
+  padding:18px 18px 24px;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+.splash-photo-wrap{
+  width:min(88vw, 520px);
+  max-height:58vh;
+  border-radius:28px;
+  overflow:hidden;
+  border:2px solid rgba(255,255,255,.8);
+  box-shadow:0 24px 50px rgba(0,0,0,.20);
+  background:#efe7dc;
+}
+
+.splash-photo{
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:58vh;
+  object-fit:contain;
+}
+
+.splash-copy{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.splash-logo{
+  width:84px;
+  height:auto;
+  margin-top:-14px;
+  filter:drop-shadow(0 6px 16px rgba(0,0,0,.18));
+}
+
+.splash-brand{
+  margin-top:6px;
+  font-size:clamp(28px, 4vw, 48px);
+  line-height:1;
+  color:#7fc3f2;
+  text-shadow:0 2px 10px rgba(255,255,255,.35);
+  font-weight:600;
+}
+
+.splash-title{
+  margin:18px 0 10px;
+  font-size:clamp(30px, 5vw, 62px);
+  line-height:1.05;
+  color:#fff;
+  text-shadow:0 4px 18px rgba(0,0,0,.22);
+}
+
+.splash-text{
+  margin:0;
+  max-width:680px;
+  font-size:clamp(16px, 2.2vw, 24px);
+  line-height:1.45;
+  color:#fff;
+  text-shadow:0 3px 12px rgba(0,0,0,.20);
+}
+
+/* AUTH */
+#authView{
+  display:none;
+  width:min(1120px, calc(100% - 28px));
+  margin:0 auto;
+  padding:18px 0 36px;
+}
+
+.authShell{
+  min-height:calc(100vh - 54px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.authCard{
+  width:min(100%, 980px);
+  display:grid;
+  grid-template-columns:1.08fr .92fr;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+
+.authVisual{
+  position:relative;
+  min-height:540px;
+  background:
+    linear-gradient(180deg, rgba(245,239,230,.08), rgba(245,239,230,.22)),
+    url("images/portada-area.jpg") center center / cover no-repeat;
+}
+
+.authVisual::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg, rgba(60,40,25,.12), rgba(60,40,25,.18)),
+    linear-gradient(135deg, rgba(216,177,95,.14), rgba(217,232,230,.08));
+}
+
+.authVisualInner{
+  position:absolute;
+  inset:auto 24px 24px 24px;
+  z-index:2;
+  background:rgba(255,255,255,.78);
+  border:1px solid rgba(255,255,255,.72);
+  border-radius:22px;
+  padding:18px;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+
+.authVisualLogo{
+  width:66px;
+  height:auto;
+  display:block;
+  margin-bottom:10px;
+}
+
+.authVisualBrand{
+  margin:0 0 6px;
+  font-size:28px;
+  line-height:1.05;
+}
+
+.authVisualText{
+  margin:0;
+  color:var(--muted);
+  font-size:15px;
+  line-height:1.5;
+}
+
+.authPanel{
+  padding:30px 26px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.96)),
+    radial-gradient(circle at top, rgba(216,177,95,.12), transparent 50%);
+}
+
+.authHeader{
+  margin-bottom:18px;
+}
+
+.authTitle{
+  margin:0 0 6px;
+  font-size:clamp(28px, 4vw, 40px);
+  line-height:1.05;
+}
+
+.authSubtitle{
+  margin:0;
+  color:var(--muted);
+  font-size:15px;
+  line-height:1.5;
+}
+
+.authTabs{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin:0 0 16px;
+}
+
+.authTab{
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--ink);
+  border-radius:999px;
+  padding:10px 14px;
+  font:inherit;
+  cursor:pointer;
+  box-shadow:0 4px 14px rgba(60,40,25,.06);
+}
+
+.authTab.active{
+  background:var(--accent-2);
+  border-color:#cadad8;
+  color:#38413f;
+  font-weight:700;
+}
+
+.authForm{
+  display:none;
+}
+
+.authForm.active{
+  display:block;
+}
+
+.field{
+  margin-bottom:14px;
+}
+
+.label{
+  display:block;
+  margin:0 0 8px;
+  font-size:14px;
+  color:var(--ink);
+}
+
+.input{
+  width:100%;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--ink);
+  border-radius:14px;
+  padding:13px 14px;
+  font:inherit;
+  outline:none;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.4);
+}
+
+.input:focus{
+  border-color:#d9c29a;
+  box-shadow:0 0 0 3px rgba(216,177,95,.14);
+}
+
+.authButton{
+  width:100%;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(180deg, #e2be6f, #cea24a);
+  color:#fff;
+  font:inherit;
+  font-weight:700;
+  padding:13px 16px;
+  cursor:pointer;
+  box-shadow:var(--shadow);
+}
+
+.authButton.secondary{
+  background:#fff;
+  color:var(--ink);
+  border:1px solid var(--line);
+  box-shadow:0 4px 14px rgba(60,40,25,.06);
+}
+
+.authActions{
+  display:grid;
+  gap:10px;
+}
+
+.authMeta{
+  margin-top:14px;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.45;
+}
+
+.authSwitch{
+  margin-top:14px;
+  font-size:14px;
+  color:var(--muted);
+}
+
+.linkButton{
+  border:none;
+  background:none;
+  padding:0;
+  margin:0;
+  color:#7da6a1;
+  font:inherit;
+  cursor:pointer;
+  text-decoration:underline;
+}
+
+.message{
+  display:none;
+  margin:0 0 14px;
+  padding:12px 14px;
+  border-radius:14px;
+  font-size:14px;
+  line-height:1.45;
+  border:1px solid transparent;
+}
+
+.message.show{
+  display:block;
+}
+
+.message.error{
+  background:#fff3f1;
+  border-color:#f0d3cf;
+  color:#8a4c44;
+}
+
+.message.success{
+  background:#f4faf8;
+  border-color:#d4e7df;
+  color:#47685f;
+}
+
+/* APP */
+#app{
+  display:none;
+  width:min(1120px, calc(100% - 28px));
+  margin:0 auto;
+  padding:18px 0 36px;
+}
+
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:50;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  background:rgba(245,241,234,.82);
+  border:1px solid rgba(231,221,210,.95);
+  box-shadow:0 8px 24px rgba(80,58,41,.08);
+  border-radius:22px;
+  padding:12px;
+  margin:12px 0 18px;
+}
+
+.topbarRow{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
+
+.logo{
+  width:52px;
+  height:52px;
+  object-fit:contain;
+  flex:0 0 auto;
+}
+
+.brandText{
+  min-width:0;
+}
+
+.title{
+  font-size:clamp(24px, 4vw, 34px);
+  line-height:1.05;
+  font-weight:700;
+  margin:0 0 4px;
+}
+
+.subtitle{
+  font-size:clamp(14px, 2vw, 17px);
+  color:var(--muted);
+  margin:0;
+}
+
+.topActions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.selectWrap{
+  position:relative;
+}
+
+.langSelect{
+  appearance:none;
+  -webkit-appearance:none;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--ink);
+  border-radius:12px;
+  padding:10px 38px 10px 12px;
+  font:inherit;
+  cursor:pointer;
+  min-width:170px;
+  box-shadow:var(--shadow);
+}
+
+.selectWrap::after{
+  content:"▾";
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  pointer-events:none;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.installBtn{
+  display:none;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(180deg, #e2be6f, #cea24a);
+  color:#fff;
+  font:inherit;
+  font-weight:700;
+  padding:10px 16px;
+  cursor:pointer;
+  box-shadow:var(--shadow);
+}
+
+.installBtn.show{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.installHint{
+  display:none;
+  font-size:13px;
+  color:var(--muted);
+  margin-top:8px;
+}
+
+.logoutBtn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#fff;
+  color:var(--ink);
+  font:inherit;
+  font-weight:700;
+  padding:10px 16px;
+  cursor:pointer;
+  box-shadow:var(--shadow);
+}
+
+.userBadge{
+  display:none;
+  align-items:center;
+  gap:8px;
+  padding:10px 12px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:12px;
+  box-shadow:var(--shadow);
+  color:var(--muted);
+  font-size:14px;
+}
+
+.userBadge.show{
+  display:inline-flex;
+}
+
+.hero{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,255,255,.84)),
+    radial-gradient(circle at top, rgba(216,177,95,.16), transparent 48%);
+  border:1px solid var(--line);
+  border-radius:28px;
+  padding:24px;
+  box-shadow:var(--shadow);
+  margin-bottom:18px;
+}
+
+.heroTitle{
+  margin:0 0 8px;
+  font-size:clamp(28px, 4.5vw, 50px);
+  line-height:1.03;
+}
+
+.heroText{
+  margin:0;
+  color:var(--muted);
+  font-size:clamp(15px, 2vw, 19px);
+  max-width:760px;
+}
+
+.sectionTitle{
+  margin:26px 0 10px;
+  color:#7da6a1;
+  letter-spacing:2px;
+  font-size:13px;
+  font-weight:700;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+}
+
+.card{
+  background:var(--card);
+  padding:20px;
+  border-radius:18px;
+  border:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  box-shadow:var(--shadow);
+}
+
+.cardInfo{
+  min-width:0;
+}
+
+.cardTitle{
+  font-size:19px;
+  font-weight:700;
+  margin:0 0 6px;
+}
+
+.cardText{
+  font-size:14px;
+  color:var(--muted);
+  margin:0;
+}
+
+.button{
+  background:var(--accent-2);
+  padding:12px 16px;
+  border-radius:12px;
+  text-decoration:none;
+  color:#38413f;
+  white-space:nowrap;
+  font-weight:700;
+  border:1px solid #cadad8;
+  transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+  box-shadow:0 4px 14px rgba(60,40,25,.08);
+  cursor:pointer;
+}
+
+.button:hover{
+  transform:translateY(-1px);
+  background:#d1e3e0;
+}
+
+.footerNote{
+  text-align:center;
+  color:var(--muted);
+  font-size:14px;
+  margin-top:24px;
+}
+
+/* MIS PEDIDOS */
+.ordersPanel{
+  display:none;
+  margin-top:18px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,255,255,.9)),
+    radial-gradient(circle at top, rgba(216,177,95,.12), transparent 48%);
+  border:1px solid var(--line);
+  border-radius:28px;
+  padding:20px;
+  box-shadow:var(--shadow);
+}
+
+.ordersPanel.show{
+  display:block;
+}
+
+.ordersPanelHead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+}
+
+.ordersPanelTitle{
+  margin:0;
+  font-size:clamp(24px, 4vw, 34px);
+  line-height:1.08;
+}
+
+.ordersPanelText{
+  margin:6px 0 0;
+  color:var(--muted);
+  font-size:15px;
+  line-height:1.5;
+}
+
+.ordersPanelActions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.ghostBtn{
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--ink);
+  border-radius:12px;
+  padding:10px 14px;
+  font:inherit;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 4px 14px rgba(60,40,25,.06);
+}
+
+.ordersLoading,
+.ordersEmpty{
+  color:var(--muted);
+  font-size:15px;
+  padding:10px 0 4px;
+}
+
+.ordersList{
+  display:grid;
+  gap:14px;
+}
+
+.orderItem{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:16px;
+  box-shadow:0 8px 18px rgba(60,40,25,.05);
+}
+
+.orderHead{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+  flex-wrap:wrap;
+}
+
+.orderMeta{
+  display:grid;
+  gap:6px;
+}
+
+.orderId{
+  font-size:18px;
+  font-weight:700;
+  margin:0;
+}
+
+.orderDate,
+.orderType,
+.orderClient{
+  color:var(--muted);
+  font-size:14px;
+  margin:0;
+}
+
+.orderRight{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:10px;
+}
+
+.orderTotal{
+  font-size:18px;
+  font-weight:700;
+}
+
+.orderDetail{
+  display:none;
+  margin-top:14px;
+  padding-top:14px;
+  border-top:1px solid var(--line);
+}
+
+.orderDetail.show{
+  display:block;
+}
+
+.orderDetailBox{
+  background:#fbf8f3;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:14px;
+  overflow:auto;
+}
+
+.orderDetailPre{
+  margin:0;
+  white-space:pre-wrap;
+  word-break:break-word;
+  font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size:13px;
+  color:var(--ink);
+}
+
+/* Tablets */
+@media (min-width:700px){
+  .grid{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+/* Desktop */
+@media (min-width:980px){
+  #app,
+  #authView{
+    padding-top:24px;
+  }
+
+  .hero{
+    padding:28px;
+  }
+}
+
+/* móvil */
+@media (max-width:860px){
+  .authCard{
+    grid-template-columns:1fr;
+  }
+
+  .authVisual{
+    min-height:280px;
+  }
+}
+
+@media (max-width:640px){
+  #app,
+  #authView{
+    width:min(100% - 16px, 1120px);
+    padding-top:10px;
+  }
+
+  .topbar{
+    border-radius:18px;
+    padding:10px;
+    margin-top:8px;
+  }
+
+  .topbarRow{
+    align-items:stretch;
+  }
+
+  .brand{
+    width:100%;
+  }
+
+  .topActions{
+    width:100%;
+    display:grid;
+    grid-template-columns:1fr;
+  }
+
+  .langSelect,
+  .installBtn,
+  .logoutBtn{
+    width:100%;
+  }
+
+  .userBadge{
+    width:100%;
+    justify-content:center;
+  }
+
+  .hero{
+    border-radius:22px;
+    padding:18px;
+  }
+
+  .card{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .button{
+    width:100%;
+    text-align:center;
+  }
+
+  .splash-content{
+    width:min(94vw, 760px);
+    padding:14px 14px 20px;
+  }
+
+  .splash-photo-wrap{
+    width:min(92vw, 520px);
+    max-height:50vh;
+    border-radius:22px;
+  }
+
+  .splash-photo{
+    max-height:50vh;
+  }
+
+  .splash-logo{
+    width:72px;
+  }
+
+  .splash-title{
+    margin-top:14px;
+  }
+
+  .authPanel{
+    padding:22px 18px;
+  }
+
+  .authVisualInner{
+    inset:auto 16px 16px 16px;
+  }
+
+  .orderRight{
+    align-items:flex-start;
+  }
+
+  #avisosPanel{
+    height:68%;
+  }
+}
+
+/* horizontal */
+@media (orientation:landscape){
+  .splash-content{
+    width:min(94vw, 1100px);
+    display:grid;
+    grid-template-columns:minmax(280px, 420px) 1fr;
+    align-items:center;
+    gap:28px;
+    text-align:left;
+  }
+
+  .splash-photo-wrap{
+    width:100%;
+    max-height:74vh;
+    margin:0;
+  }
+
+  .splash-photo{
+    max-height:74vh;
+  }
+
+  .splash-logo{
+    margin-top:0;
+  }
+
+  .splash-copy{
+    align-items:flex-start;
+  }
+
+  .splash-brand,
+  .splash-title,
+  .splash-text{
+    text-align:left;
+  }
+}
+
+/* RTL Arabic */
+html[dir="rtl"] body{
+  font-family:Georgia, serif;
+}
+
+html[dir="rtl"] .brand,
+html[dir="rtl"] .topActions,
+html[dir="rtl"] .card,
+html[dir="rtl"] .splash-content,
+html[dir="rtl"] .splash-copy,
+html[dir="rtl"] .authCard,
+html[dir="rtl"] .authTabs,
+html[dir="rtl"] .authPanel,
+html[dir="rtl"] .authVisualInner,
+html[dir="rtl"] .ordersPanelHead,
+html[dir="rtl"] .orderHead{
+  direction:rtl;
+}
+
+html[dir="rtl"] .selectWrap::after{
+  right:auto;
+  left:12px;
+}
+
+html[dir="rtl"] .splash-brand,
+html[dir="rtl"] .splash-title,
+html[dir="rtl"] .splash-text,
+html[dir="rtl"] .authTitle,
+html[dir="rtl"] .authSubtitle,
+html[dir="rtl"] .authVisualBrand,
+html[dir="rtl"] .authVisualText,
+html[dir="rtl"] .ordersPanelTitle,
+html[dir="rtl"] .ordersPanelText{
+  text-align:right;
+}
+
+html[dir="rtl"] .orderRight{
+  align-items:flex-start;
+}
+</style>
+</head>
+
+<body>
+
+<div id="splash" aria-hidden="true">
+  <div class="splash-bg"></div>
+  <div class="splash-content">
+    <div class="splash-photo-wrap">
+      <img class="splash-photo" src="images/portada-area.jpg" alt="Abuela Tata">
+    </div>
+
+    <div class="splash-copy">
+      <img class="splash-logo" src="assets/Navy&blue.png" alt="Logo Navy&blue">
+      <div class="splash-brand">Abuela Tata</div>
+      <h1 class="splash-title" data-i18n="splashTitle">Bienvenid@ al Área Profesional</h1>
+      <p class="splash-text" data-i18n="splashText">Un espacio pensado para realizar pedidos, consultar stock y acceder a toda la documentación de campaña.</p>
+    </div>
+  </div>
+</div>
+
+<div id="authView">
+  <div class="authShell">
+    <div class="authCard">
+      <div class="authVisual">
+        <div class="authVisualInner">
+          <img class="authVisualLogo" src="assets/navy&blue.png" alt="Logo navy & blue">
+          <h2 class="authVisualBrand">Abuela Tata</h2>
+          <p class="authVisualText" data-i18n="authVisualText">Un acceso privado y seguro para clientes profesionales.</p>
+        </div>
+      </div>
+
+      <div class="authPanel">
+        <div class="authHeader">
+          <h1 class="authTitle" data-i18n="authTitle">Acceso privado</h1>
+          <p class="authSubtitle" data-i18n="authSubtitle">Introduce tu email y contraseña para entrar en tu Área Profesional.</p>
+        </div>
+
+        <div class="authTabs">
+          <button id="tabLogin" class="authTab active" type="button" data-i18n="tabLogin">Entrar</button>
+          <button id="tabReset" class="authTab" type="button" data-i18n="tabReset">Recuperar contraseña</button>
+          <button id="tabUpdate" class="authTab" type="button" data-i18n="tabUpdate" style="display:none;">Nueva contraseña</button>
+        </div>
+
+        <div id="authMessage" class="message" aria-live="polite"></div>
+
+        <form id="loginForm" class="authForm active" autocomplete="on">
+          <div class="field">
+            <label class="label" for="loginEmail" data-i18n="emailLabel">Email</label>
+            <input id="loginEmail" class="input" type="email" autocomplete="email" required>
+          </div>
+
+          <div class="field">
+            <label class="label" for="loginPassword" data-i18n="passwordLabel">Contraseña</label>
+            <input id="loginPassword" class="input" type="password" autocomplete="current-password" required>
+          </div>
+
+          <div class="authActions">
+            <button class="authButton" type="submit" data-i18n="loginButton">Entrar</button>
+          </div>
+
+          <div class="authSwitch">
+            <span data-i18n="forgotInline">¿Has olvidado tu contraseña?</span>
+            <button id="goToReset" class="linkButton" type="button" data-i18n="recoverHere">Recupérala aquí</button>
+          </div>
+        </form>
+
+        <form id="resetForm" class="authForm" autocomplete="on">
+          <div class="field">
+            <label class="label" for="resetEmail" data-i18n="emailLabel">Email</label>
+            <input id="resetEmail" class="input" type="email" autocomplete="email" required>
+          </div>
+
+          <div class="authActions">
+            <button class="authButton" type="submit" data-i18n="resetButton">Enviar enlace</button>
+            <button id="backToLogin" class="authButton secondary" type="button" data-i18n="backToLogin">Volver al acceso</button>
+          </div>
+
+          <div class="authMeta" data-i18n="resetHelp">
+            Te enviaremos un enlace seguro para restablecer tu contraseña.
+          </div>
+        </form>
+
+        <form id="updateForm" class="authForm" autocomplete="on">
+          <div class="field">
+            <label class="label" for="newPassword" data-i18n="newPasswordLabel">Nueva contraseña</label>
+            <input id="newPassword" class="input" type="password" autocomplete="new-password" minlength="6">
+          </div>
+
+          <div class="field">
+            <label class="label" for="confirmPassword" data-i18n="confirmPasswordLabel">Confirmar contraseña</label>
+            <input id="confirmPassword" class="input" type="password" autocomplete="new-password" minlength="6">
+          </div>
+
+          <div class="authActions">
+            <button class="authButton" type="submit" data-i18n="savePasswordButton">Guardar nueva contraseña</button>
+          </div>
+
+          <div class="authMeta" data-i18n="updateHelp">
+            Introduce tu nueva contraseña para completar la recuperación de acceso.
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="app">
+  <div class="topbar">
+    <div class="topbarRow">
+      <div class="brand">
+        <img src="assets/logos/navy-blue.png" class="logo" alt="Logo Navy & blue">
+        <div class="brandText">
+          <h1 class="title" data-i18n="appTitle">Navy & Blue B2B - 2027</h1>
+          <p class="subtitle" data-i18n="appSubtitle">Area profesional para representantes y clientes .</p>
+        </div>
+      </div>
+
+      <div class="topActions">
+        <div id="userBadge" class="userBadge">
+          <span id="userEmail"></span>
+        </div>
+
+        <div class="selectWrap">
+          <select id="languageSelect" class="langSelect" aria-label="Idioma">
+            <option value="es">Español</option>
+            <option value="en">English</option>
+            <option value="pt">Português</option>
+            <option value="it">Italiano</option>
+            <option value="ar">العربية</option>
+          </select>
+        </div>
+
+        <button id="installBtn" class="installBtn" type="button" data-i18n="installButton">Instalar app</button>
+        <button id="logoutBtn" class="logoutBtn" type="button" data-i18n="logoutButton">Cerrar sesión</button>
+      </div>
+    </div>
+
+    <div id="installHint" class="installHint" data-i18n="installHint">
+      Si no aparece el aviso automático, usa “Añadir a pantalla de inicio” o “Instalar aplicación” en el navegador.
+    </div>
+  </div>
+
+  <section class="hero">
+    <h2 class="heroTitle" data-i18n="heroTitle">Bienvenido al Área Profesional</h2>
+    <p class="heroText" data-i18n="heroText">Un acceso rápido y elegante para realizar pedidos, consultar stock y descargar toda la documentación de campaña.</p>
+  </section>
+
+  <div class="sectionTitle" data-i18n="sectionOrders">PEDIDOS</div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="cardInfo">
+        <div class="cardTitle" data-i18n="repeatTitle">Repetición de campaña</div>
+        <div class="cardText" data-i18n="repeatText">Producción según calendario</div>
+      </div>
+      <a class="button" href="pedidos.html?modo=repeticiones" data-i18n="enterButton">Entrar →</a>
+    </div>
+
+    <div class="card">
+      <div class="cardInfo">
+        <div class="cardTitle" data-i18n="stockTitle">Stock disponible</div>
+        <div class="cardText" data-i18n="stockText">Entrega inmediata</div>
+      </div>
+      <a class="button" href="pedidos.html?modo=stock" data-i18n="enterButton">Entrar →</a>
+    </div>
+
+    <div class="card">
+      <div class="cardInfo">
+        <div class="cardTitle" data-i18n="myOrdersTitle">Mis pedidos</div>
+        <div class="cardText" data-i18n="myOrdersText">Consulta tus pedidos guardados</div>
+      </div>
+      <button id="openOrdersBtn" class="button" type="button" data-i18n="viewButton">Ver →</button>
+    </div>
+  </div>
+
+  <section id="ordersPanel" class="ordersPanel" aria-live="polite">
+    <div class="ordersPanelHead">
+      <div>
+        <h3 class="ordersPanelTitle" data-i18n="myOrdersPanelTitle">Mis pedidos</h3>
+        <p class="ordersPanelText" data-i18n="myOrdersPanelText">Aquí puedes consultar únicamente los pedidos asociados a tu cuenta.</p>
+      </div>
+
+      <div class="ordersPanelActions">
+        <button id="refreshOrdersBtn" class="ghostBtn" type="button" data-i18n="refreshButton">Actualizar</button>
+        <button id="closeOrdersBtn" class="ghostBtn" type="button" data-i18n="closeButton">Cerrar</button>
+      </div>
+    </div>
+
+    <div id="ordersLoading" class="ordersLoading" style="display:none;" data-i18n="loadingOrders">Cargando pedidos…</div>
+    <div id="ordersEmpty" class="ordersEmpty" style="display:none;" data-i18n="emptyOrders">Todavía no tienes pedidos guardados.</div>
+    <div id="ordersList" class="ordersList"></div>
+  </section>
+<section id="modulo-guia-tallas" class="modulo" style="display:none;">
+  <div class="card" style="padding:20px;">
+
+    <h2 style="margin-bottom:10px;">Guía de tallas</h2>
+    <p style="margin-bottom:16px; color:#8b6f5b;">
+      Calculadora de tallas Abuela Tata.
+    </p>
+
+    <a class="button" 
+   href="https://abuelatata.github.io/calculadora-talla-abuela-tata-general/" 
+   target="_blank" 
+   rel="noopener">
+  Abrir calculadora →
+</a>
+
+  </div>
+</section>
+
+  <div class="sectionTitle" data-i18n="sectionDocs">DOCUMENTACIÓN</div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="cardInfo">
+        <div class="cardTitle" data-i18n="mediaTitle">Descarga multimedia</div>
+        <div class="cardText" data-i18n="mediaText">Imágenes en alta resolución</div>
+      </div>
+      <a class="button" href="multimedia.html" data-i18n="enterButton">Entrar →</a>
+    </div>
+
+    <div class="card">
+      <div class="cardInfo">
+        <div class="cardTitle" data-i18n="ratesTitle">Tarifas</div>
+        <div class="cardText" data-i18n="ratesText">Precios de campaña</div>
+      </div>
+      <a class="button" href="./docs/tarifa-ceremonia-26-abuela-tata.pdf" target="_blank" rel="noopener" data-i18n="enterButton">Entrar →</a>
+    </div>
+
+    <div class="card">
+      <div class="cardInfo">
+        <div class="cardTitle">Guía de Referencias</div>
+        <div class="cardText">Estructura de códigos, colores y familias</div>
+      </div>
+      <a class="button" href="referencias.html">Entrar →</a>
+    </div>
+
+        <div class="card">
+      <div class="cardInfo">
+       <div class="cardTitle">Guía de tallas</div>
+       <div class="cardText">Calculadora de tallas inteligente.</div>
+     </div>
+     <button class="button" onclick="mostrarModulo('guia-tallas')">Abrir</button>
+    </div>
+    
+    <div class="card">
+      <div class="cardInfo">
+        <div class="cardTitle" data-i18n="conditionsTitle">Condiciones</div>
+        <div class="cardText" data-i18n="conditionsText">Calendario y normas</div>
+      </div>
+      <a class="button" href="condiciones.html" data-i18n="enterButton">Entrar →</a>
+    </div>
+
+    <div class="card">
+      <div class="cardInfo">
+        <div class="cardTitle" data-i18n="calendarTitle">Calendario de repeticiones</div>
+        <div class="cardText" data-i18n="calendarText">Fechas clave y planificación</div>
+      </div>
+      <a class="button" href="./docs/calendario-repeticiones-ceremonia-26.pdf" target="_blank" rel="noopener" data-i18n="enterButton">Entrar →</a>
+    </div>
+  </div>
+
+  <div class="footerNote" data-i18n="footerNote">
+    Diseñado para móvil, tablet y ordenador.
+  </div>
+</div>
+
+<div id="avisosPanel">
+  <div class="avisosContenido">
+    <h3>📢 Comunicaciones</h3>
+    <p>Este será nuestro espacio dedicado para compartir toda la información relevante de campaña.</p>
+    <p>Aquí os mantendremos informados de novedades, fechas de servicio, actualizaciones y cualquier comunicación importante.</p>
+    <button id="cerrarAvisosBtn" type="button">Cerrar</button>
+  </div>
+</div>
+
+<div id="avisosBtn">🔔</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+function mostrarModulo(nombre){
+
+  // Ocultar TODO el contenido principal
+  document.querySelectorAll('.grid, .sectionTitle, .ordersPanel').forEach(el => {
+    el.style.display = 'none';
+  });
+
+  // Ocultar módulos
+  document.querySelectorAll('.modulo').forEach(m => {
+    m.style.display = 'none';
+  });
+
+  // Mostrar módulo seleccionado
+  const destino = document.getElementById('modulo-' + nombre);
+  if (destino) {
+    destino.style.display = 'block';
+    window.scrollTo(0, 0);
+  }
+}
+  
+(function () {
+  const SUPABASE_URL = "https://qoyrjhgjtydbcngfnyqn.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFveXJqaGdqdHlkYmNuZ2ZueXFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5MTQ2NzQsImV4cCI6MjA4ODQ5MDY3NH0.ASOVIDOiJcuWOWExEzGBvwjjKEpZIfRLbxgVyc6Xr64";
+
+  const splash = document.getElementById("splash");
+  const authView = document.getElementById("authView");
+  const app = document.getElementById("app");
+  const installBtn = document.getElementById("installBtn");
+  const installHint = document.getElementById("installHint");
+  const languageSelect = document.getElementById("languageSelect");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const userBadge = document.getElementById("userBadge");
+  const userEmail = document.getElementById("userEmail");
+  const authMessage = document.getElementById("authMessage");
+  const tabLogin = document.getElementById("tabLogin");
+  const tabReset = document.getElementById("tabReset");
+  const tabUpdate = document.getElementById("tabUpdate");
+  const loginForm = document.getElementById("loginForm");
+  const resetForm = document.getElementById("resetForm");
+  const updateForm = document.getElementById("updateForm");
+  const goToReset = document.getElementById("goToReset");
+  const backToLogin = document.getElementById("backToLogin");
+  const loginEmail = document.getElementById("loginEmail");
+  const loginPassword = document.getElementById("loginPassword");
+  const resetEmail = document.getElementById("resetEmail");
+  const newPassword = document.getElementById("newPassword");
+  const confirmPassword = document.getElementById("confirmPassword");
+
+  const openOrdersBtn = document.getElementById("openOrdersBtn");
+  const closeOrdersBtn = document.getElementById("closeOrdersBtn");
+  const refreshOrdersBtn = document.getElementById("refreshOrdersBtn");
+  const ordersPanel = document.getElementById("ordersPanel");
+  const ordersLoading = document.getElementById("ordersLoading");
+  const ordersEmpty = document.getElementById("ordersEmpty");
+  const ordersList = document.getElementById("ordersList");
+
+  const avisosBtn = document.getElementById("avisosBtn");
+  const avisosPanel = document.getElementById("avisosPanel");
+  const cerrarAvisosBtn = document.getElementById("cerrarAvisosBtn");
+  const avisosBackdrop = document.getElementById("avisosBackdrop");
+
+  let deferredPrompt = null;
+  let splashHidden = false;
+  let currentLang = localStorage.getItem("at_lang") || "es";
+  let supabase = null;
+  let currentSession = null;
+
+  const translations = {
+    es: {
+      splashTitle: "Bienvenid@ al Área Profesional",
+      splashText: "Un espacio pensado para realizar pedidos, consultar stock y acceder a toda la documentación de campaña.",
+      appTitle: "Área Profesional",
+      appSubtitle: "Acceso para clientes profesionales, pedidos y documentación de campaña.",
+      heroTitle: "Bienvenido al Área Profesional",
+      heroText: "Un acceso rápido y elegante para realizar pedidos, consultar stock y descargar toda la documentación de campaña.",
+      sectionOrders: "PEDIDOS",
+      repeatTitle: "Repetición de campaña",
+      repeatText: "Producción según calendario",
+      stockTitle: "Stock disponible",
+      stockText: "Entrega inmediata",
+      myOrdersTitle: "Mis pedidos",
+      myOrdersText: "Consulta tus pedidos guardados",
+      myOrdersPanelTitle: "Mis pedidos",
+      myOrdersPanelText: "Aquí puedes consultar únicamente los pedidos asociados a tu cuenta.",
+      sectionDocs: "DOCUMENTACIÓN",
+      mediaTitle: "Descarga multimedia",
+      mediaText: "Imágenes en alta resolución",
+      ratesTitle: "Tarifas",
+      ratesText: "Precios de campaña",
+      sizesTitle: "Guía de tallas",
+      sizesText: "Medidas y equivalencias",
+      conditionsTitle: "Condiciones",
+      conditionsText: "Calendario y normas",
+      calendarTitle: "Calendario de repeticiones",
+      calendarText: "Fechas clave y planificación",
+      enterButton: "Entrar →",
+      viewButton: "Ver →",
+      refreshButton: "Actualizar",
+      closeButton: "Cerrar",
+      installButton: "Instalar app",
+      installHint: "Si no aparece el aviso automático, usa “Añadir a pantalla de inicio” o “Instalar aplicación” en el navegador.",
+      footerNote: "Diseñado para móvil, tablet y ordenador.",
+      logoutButton: "Cerrar sesión",
+      authVisualText: "Un acceso privado, elegante y seguro para clientes profesionales.",
+      authTitle: "Acceso privado",
+      authSubtitle: "Introduce tu email y contraseña para entrar en tu Área Profesional.",
+      tabLogin: "Entrar",
+      tabReset: "Recuperar contraseña",
+      tabUpdate: "Nueva contraseña",
+      emailLabel: "Email",
+      passwordLabel: "Contraseña",
+      loginButton: "Entrar",
+      forgotInline: "¿Has olvidado tu contraseña?",
+      recoverHere: "Recupérala aquí",
+      resetButton: "Enviar enlace",
+      backToLogin: "Volver al acceso",
+      resetHelp: "Te enviaremos un enlace seguro para restablecer tu contraseña.",
+      newPasswordLabel: "Nueva contraseña",
+      confirmPasswordLabel: "Confirmar contraseña",
+      savePasswordButton: "Guardar nueva contraseña",
+      updateHelp: "Introduce tu nueva contraseña para completar la recuperación de acceso.",
+      loginSuccess: "Acceso correcto. Bienvenid@.",
+      logoutSuccess: "Has cerrado sesión correctamente.",
+      resetSuccess: "Te hemos enviado un enlace para restablecer tu contraseña.",
+      updateSuccess: "Tu contraseña se ha actualizado correctamente.",
+      authErrorGeneric: "No ha sido posible completar la operación. Inténtalo de nuevo.",
+      invalidCredentials: "Email o contraseña incorrectos.",
+      missingSupabase: "Falta configurar correctamente el acceso privado.",
+      passwordMismatch: "Las contraseñas no coinciden.",
+      passwordShort: "La contraseña debe tener al menos 6 caracteres.",
+      networkError: "No se ha podido conectar con el servidor. Revisa la URL del proyecto en Supabase y tu conexión.",
+      userPrefix: "Sesión:",
+      loadingOrders: "Cargando pedidos…",
+      emptyOrders: "Todavía no tienes pedidos guardados.",
+      ordersLoadError: "No ha sido posible cargar tus pedidos.",
+      orderLabelDate: "Fecha",
+      orderLabelType: "Tipo",
+      orderLabelClient: "Cliente",
+      orderLabelTotal: "Total",
+      orderTypeStock: "Stock",
+      orderTypeRepeat: "Repetición",
+      orderDetailButton: "Ver detalle",
+      orderHideButton: "Ocultar detalle"
+    },
+    en: {
+      splashTitle: "Welcome to the Professional Area",
+      splashText: "A space designed to place orders, check stock and access all campaign documentation.",
+      appTitle: "Professional Area",
+      appSubtitle: "Access for professional clients, orders and campaign documentation.",
+      heroTitle: "Welcome to the Professional Area",
+      heroText: "A quick and elegant access point to place orders, check stock and download all campaign documentation.",
+      sectionOrders: "ORDERS",
+      repeatTitle: "Repeat campaign order",
+      repeatText: "Production according to calendar",
+      stockTitle: "Available stock",
+      stockText: "Immediate delivery",
+      myOrdersTitle: "My orders",
+      myOrdersText: "Check your saved orders",
+      myOrdersPanelTitle: "My orders",
+      myOrdersPanelText: "Here you can view only the orders associated with your account.",
+      sectionDocs: "DOCUMENTATION",
+      mediaTitle: "Media download",
+      mediaText: "High-resolution images",
+      ratesTitle: "Price lists",
+      ratesText: "Campaign prices",
+      sizesTitle: "Size guide",
+      sizesText: "Measurements and equivalences",
+      conditionsTitle: "Terms",
+      conditionsText: "Calendar and rules",
+      calendarTitle: "Reorder calendar",
+      calendarText: "Key dates and planning",
+      enterButton: "Enter →",
+      viewButton: "View →",
+      refreshButton: "Refresh",
+      closeButton: "Close",
+      installButton: "Install app",
+      installHint: "If the automatic prompt does not appear, use “Add to Home Screen” or “Install app” in your browser.",
+      footerNote: "Designed for mobile, tablet and desktop.",
+      logoutButton: "Log out",
+      authVisualText: "A private, elegant and secure access for professional clients.",
+      authTitle: "Private access",
+      authSubtitle: "Enter your email and password to access your Professional Area.",
+      tabLogin: "Sign in",
+      tabReset: "Recover password",
+      tabUpdate: "New password",
+      emailLabel: "Email",
+      passwordLabel: "Password",
+      loginButton: "Sign in",
+      forgotInline: "Forgot your password?",
+      recoverHere: "Recover it here",
+      resetButton: "Send link",
+      backToLogin: "Back to sign in",
+      resetHelp: "We will send you a secure link to reset your password.",
+      newPasswordLabel: "New password",
+      confirmPasswordLabel: "Confirm password",
+      savePasswordButton: "Save new password",
+      updateHelp: "Enter your new password to complete account recovery.",
+      loginSuccess: "Signed in successfully. Welcome.",
+      logoutSuccess: "You have logged out successfully.",
+      resetSuccess: "We have sent you a password reset link.",
+      updateSuccess: "Your password has been updated successfully.",
+      authErrorGeneric: "The operation could not be completed. Please try again.",
+      invalidCredentials: "Incorrect email or password.",
+      missingSupabase: "Private access is not configured correctly.",
+      passwordMismatch: "Passwords do not match.",
+      passwordShort: "Password must be at least 6 characters long.",
+      networkError: "Could not connect to the server. Check your Supabase project URL and your connection.",
+      userPrefix: "Session:",
+      loadingOrders: "Loading orders…",
+      emptyOrders: "You do not have any saved orders yet.",
+      ordersLoadError: "Your orders could not be loaded.",
+      orderLabelDate: "Date",
+      orderLabelType: "Type",
+      orderLabelClient: "Client",
+      orderLabelTotal: "Total",
+      orderTypeStock: "Stock",
+      orderTypeRepeat: "Repeat",
+      orderDetailButton: "View detail",
+      orderHideButton: "Hide detail"
+    },
+    pt: {
+      splashTitle: "Bem-vindo à Área Profissional",
+      splashText: "Um espaço pensado para fazer encomendas, consultar stock e aceder a toda a documentação da campanha.",
+      appTitle: "Área Profissional",
+      appSubtitle: "Acesso para clientes profissionais, encomendas e documentação da campanha.",
+      heroTitle: "Bem-vindo à Área Profissional",
+      heroText: "Um acesso rápido e elegante para fazer encomendas, consultar stock e descarregar toda a documentação da campanha.",
+      sectionOrders: "ENCOMENDAS",
+      repeatTitle: "Reposição de campanha",
+      repeatText: "Produção conforme calendário",
+      stockTitle: "Stock disponível",
+      stockText: "Entrega imediata",
+      myOrdersTitle: "As minhas encomendas",
+      myOrdersText: "Consulte as suas encomendas guardadas",
+      myOrdersPanelTitle: "As minhas encomendas",
+      myOrdersPanelText: "Aqui pode consultar apenas as encomendas associadas à sua conta.",
+      sectionDocs: "DOCUMENTAÇÃO",
+      mediaTitle: "Descarga multimédia",
+      mediaText: "Imagens em alta resolução",
+      ratesTitle: "Tabelas de preços",
+      ratesText: "Preços da campanha",
+      sizesTitle: "Guia de tamanhos",
+      sizesText: "Medidas e equivalências",
+      conditionsTitle: "Condições",
+      conditionsText: "Calendário e normas",
+      calendarTitle: "Calendário de reposições",
+      calendarText: "Datas-chave e planeamento",
+      enterButton: "Entrar →",
+      viewButton: "Ver →",
+      refreshButton: "Atualizar",
+      closeButton: "Fechar",
+      installButton: "Instalar app",
+      installHint: "Se o aviso automático não aparecer, use “Adicionar ao ecrã inicial” ou “Instalar aplicação” no navegador.",
+      footerNote: "Desenvolvido para telemóvel, tablet e computador.",
+      logoutButton: "Terminar sessão",
+      authVisualText: "Um acesso privado, elegante e seguro para clientes profissionais.",
+      authTitle: "Acesso privado",
+      authSubtitle: "Introduza o seu email e palavra-passe para entrar na sua Área Profissional.",
+      tabLogin: "Entrar",
+      tabReset: "Recuperar palavra-passe",
+      tabUpdate: "Nova palavra-passe",
+      emailLabel: "Email",
+      passwordLabel: "Palavra-passe",
+      loginButton: "Entrar",
+      forgotInline: "Esqueceu-se da palavra-passe?",
+      recoverHere: "Recupere aqui",
+      resetButton: "Enviar link",
+      backToLogin: "Voltar ao acesso",
+      resetHelp: "Enviaremos um link seguro para redefinir a sua palavra-passe.",
+      newPasswordLabel: "Nova palavra-passe",
+      confirmPasswordLabel: "Confirmar palavra-passe",
+      savePasswordButton: "Guardar nova palavra-passe",
+      updateHelp: "Introduza a sua nova palavra-passe para concluir a recuperação de acesso.",
+      loginSuccess: "Sessão iniciada com sucesso. Bem-vindo.",
+      logoutSuccess: "Terminou a sessão corretamente.",
+      resetSuccess: "Enviámos um link para redefinir a sua palavra-passe.",
+      updateSuccess: "A sua palavra-passe foi atualizada com sucesso.",
+      authErrorGeneric: "Não foi possível concluir a operação. Tente novamente.",
+      invalidCredentials: "Email ou palavra-passe incorretos.",
+      missingSupabase: "O acesso privado não está configurado corretamente.",
+      passwordMismatch: "As palavras-passe não coincidem.",
+      passwordShort: "A palavra-passe deve ter pelo menos 6 caracteres.",
+      networkError: "Não foi possível ligar ao servidor. Verifique a URL do projeto no Supabase e a sua ligação.",
+      userPrefix: "Sessão:",
+      loadingOrders: "A carregar encomendas…",
+      emptyOrders: "Ainda não tem encomendas guardadas.",
+      ordersLoadError: "Não foi possível carregar as suas encomendas.",
+      orderLabelDate: "Data",
+      orderLabelType: "Tipo",
+      orderLabelClient: "Cliente",
+      orderLabelTotal: "Total",
+      orderTypeStock: "Stock",
+      orderTypeRepeat: "Reposição",
+      orderDetailButton: "Ver detalhe",
+      orderHideButton: "Ocultar detalhe"
+    },
+    it: {
+      splashTitle: "Benvenuto nell’Area Professionale",
+      splashText: "Uno spazio pensato per effettuare ordini, consultare lo stock e accedere a tutta la documentazione di campagna.",
+      appTitle: "Area Professionale",
+      appSubtitle: "Accesso per clienti professionali, ordini e documentazione di campagna.",
+      heroTitle: "Benvenuto nell’Area Professionale",
+      heroText: "Un accesso rapido ed elegante per effettuare ordini, consultare lo stock e scaricare tutta la documentazione di campagna.",
+      sectionOrders: "ORDINI",
+      repeatTitle: "Riassortimento campagna",
+      repeatText: "Produzione secondo calendario",
+      stockTitle: "Stock disponibile",
+      stockText: "Consegna immediata",
+      myOrdersTitle: "I miei ordini",
+      myOrdersText: "Consulta i tuoi ordini salvati",
+      myOrdersPanelTitle: "I miei ordini",
+      myOrdersPanelText: "Qui puoi consultare solo gli ordini associati al tuo account.",
+      sectionDocs: "DOCUMENTAZIONE",
+      mediaTitle: "Download multimedia",
+      mediaText: "Immagini ad alta risoluzione",
+      ratesTitle: "Listini prezzi",
+      ratesText: "Prezzi di campagna",
+      sizesTitle: "Guida alle taglie",
+      sizesText: "Misure ed equivalenze",
+      conditionsTitle: "Condizioni",
+      conditionsText: "Calendario e regole",
+      calendarTitle: "Calendario riassortimenti",
+      calendarText: "Date chiave e pianificazione",
+      enterButton: "Entra →",
+      viewButton: "Vedi →",
+      refreshButton: "Aggiorna",
+      closeButton: "Chiudi",
+      installButton: "Installa app",
+      installHint: "Se l’avviso automatico non compare, usa “Aggiungi alla schermata Home” o “Installa app” nel browser.",
+      footerNote: "Progettato per mobile, tablet e computer.",
+      logoutButton: "Disconnetti",
+      authVisualText: "Un accesso privato, elegante e sicuro per clienti professionali.",
+      authTitle: "Accesso privato",
+      authSubtitle: "Inserisci email e password per entrare nella tua Area Professionale.",
+      tabLogin: "Entra",
+      tabReset: "Recupera password",
+      tabUpdate: "Nuova password",
+      emailLabel: "Email",
+      passwordLabel: "Password",
+      loginButton: "Entra",
+      forgotInline: "Hai dimenticato la password?",
+      recoverHere: "Recuperala qui",
+      resetButton: "Invia link",
+      backToLogin: "Torna all’accesso",
+      resetHelp: "Ti invieremo un link sicuro per reimpostare la password.",
+      newPasswordLabel: "Nuova password",
+      confirmPasswordLabel: "Conferma password",
+      savePasswordButton: "Salva nuova password",
+      updateHelp: "Inserisci la nuova password per completare il recupero dell’accesso.",
+      loginSuccess: "Accesso effettuato correttamente. Benvenuto.",
+      logoutSuccess: "Hai effettuato il logout correttamente.",
+      resetSuccess: "Ti abbiamo inviato un link per reimpostare la password.",
+      updateSuccess: "La tua password è stata aggiornata correttamente.",
+      authErrorGeneric: "Impossibile completare l’operazione. Riprova.",
+      invalidCredentials: "Email o password non corretti.",
+      missingSupabase: "L’accesso privato non è configurato correttamente.",
+      passwordMismatch: "Le password non coincidono.",
+      passwordShort: "La password deve contenere almeno 6 caratteri.",
+      networkError: "Impossibile connettersi al server. Controlla l’URL del progetto Supabase e la connessione.",
+      userPrefix: "Sessione:",
+      loadingOrders: "Caricamento ordini…",
+      emptyOrders: "Non hai ancora ordini salvati.",
+      ordersLoadError: "Non è stato possibile caricare i tuoi ordini.",
+      orderLabelDate: "Data",
+      orderLabelType: "Tipo",
+      orderLabelClient: "Cliente",
+      orderLabelTotal: "Totale",
+      orderTypeStock: "Stock",
+      orderTypeRepeat: "Riassortimento",
+      orderDetailButton: "Vedi dettaglio",
+      orderHideButton: "Nascondi dettaglio"
+    },
+    ar: {
+      splashTitle: "مرحباً بك في المنطقة المهنية",
+      splashText: "مساحة مخصصة لتقديم الطلبات ومراجعة المخزون والوصول إلى جميع وثائق الحملة.",
+      appTitle: "المنطقة المهنية",
+      appSubtitle: "دخول خاص للعملاء المهنيين والطلبات ووثائق الحملة.",
+      heroTitle: "مرحباً بك في المنطقة المهنية",
+      heroText: "وصول سريع وأنيق لتقديم الطلبات ومراجعة المخزون وتنزيل جميع وثائق الحملة.",
+      sectionOrders: "الطلبات",
+      repeatTitle: "إعادة طلب الحملة",
+      repeatText: "الإنتاج حسب الجدول",
+      stockTitle: "المخزون المتاح",
+      stockText: "تسليم فوري",
+      myOrdersTitle: "طلباتي",
+      myOrdersText: "راجع طلباتك المحفوظة",
+      myOrdersPanelTitle: "طلباتي",
+      myOrdersPanelText: "هنا يمكنك مراجعة الطلبات المرتبطة بحسابك فقط.",
+      sectionDocs: "الوثائق",
+      mediaTitle: "تنزيل الوسائط",
+      mediaText: "صور عالية الدقة",
+      ratesTitle: "الأسعار",
+      ratesText: "أسعار الحملة",
+      sizesTitle: "دليل المقاسات",
+      sizesText: "القياسات والمعادلات",
+      conditionsTitle: "الشروط",
+      conditionsText: "الجدول والقواعد",
+      calendarTitle: "تقويم الإعادات",
+      calendarText: "التواريخ الأساسية والتخطيط",
+      enterButton: "دخول ←",
+      viewButton: "عرض ←",
+      refreshButton: "تحديث",
+      closeButton: "إغلاق",
+      installButton: "تثبيت التطبيق",
+      installHint: "إذا لم يظهر التنبيه تلقائياً، استخدم “إضافة إلى الشاشة الرئيسية” أو “تثبيت التطبيق” من المتصفح.",
+      footerNote: "مصمم للجوال والتابلت والكمبيوتر.",
+      logoutButton: "تسجيل الخروج",
+      authVisualText: "وصول خاص وأنيق وآمن للعملاء المهنيين.",
+      authTitle: "وصول خاص",
+      authSubtitle: "أدخل بريدك الإلكتروني وكلمة المرور للوصول إلى منطقتك المهنية.",
+      tabLogin: "دخول",
+      tabReset: "استعادة كلمة المرور",
+      tabUpdate: "كلمة مرور جديدة",
+      emailLabel: "البريد الإلكتروني",
+      passwordLabel: "كلمة المرور",
+      loginButton: "دخول",
+      forgotInline: "هل نسيت كلمة المرور؟",
+      recoverHere: "استعدها هنا",
+      resetButton: "إرسال الرابط",
+      backToLogin: "العودة إلى الدخول",
+      resetHelp: "سنرسل لك رابطاً آمناً لإعادة تعيين كلمة المرور.",
+      newPasswordLabel: "كلمة المرور الجديدة",
+      confirmPasswordLabel: "تأكيد كلمة المرور",
+      savePasswordButton: "حفظ كلمة المرور الجديدة",
+      updateHelp: "أدخل كلمة المرور الجديدة لإكمال استعادة الوصول.",
+      loginSuccess: "تم تسجيل الدخول بنجاح. أهلاً بك.",
+      logoutSuccess: "تم تسجيل الخروج بنجاح.",
+      resetSuccess: "لقد أرسلنا لك رابطاً لإعادة تعيين كلمة المرور.",
+      updateSuccess: "تم تحديث كلمة المرور بنجاح.",
+      authErrorGeneric: "تعذر إتمام العملية. حاول مرة أخرى.",
+      invalidCredentials: "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
+      missingSupabase: "إعداد الوصول الخاص غير صحيح.",
+      passwordMismatch: "كلمتا المرور غير متطابقتين.",
+      passwordShort: "يجب أن تكون كلمة المرور 6 أحرف على الأقل.",
+      networkError: "تعذر الاتصال بالخادم. راجع رابط مشروع Supabase والاتصال بالإنترنت.",
+      userPrefix: "الجلسة:",
+      loadingOrders: "جارٍ تحميل الطلبات…",
+      emptyOrders: "لا توجد لديك طلبات محفوظة بعد.",
+      ordersLoadError: "تعذر تحميل طلباتك.",
+      orderLabelDate: "التاريخ",
+      orderLabelType: "النوع",
+      orderLabelClient: "العميل",
+      orderLabelTotal: "الإجمالي",
+      orderTypeStock: "مخزون",
+      orderTypeRepeat: "إعادة طلب",
+      orderDetailButton: "عرض التفاصيل",
+      orderHideButton: "إخفاء التفاصيل"
+    }
+  };
+
+  function t(key) {
+    const dict = translations[currentLang] || translations.es;
+    return dict[key] || translations.es[key] || key;
+  }
+
+  function getFriendlyError(error) {
+    const message = (error && (error.message || error.error_description || error.error))
+      ? String(error.message || error.error_description || error.error)
+      : "";
+
+    if (!message) return t("authErrorGeneric");
+
+    const lower = message.toLowerCase();
+
+    if (
+      lower.includes("invalid login credentials") ||
+      lower.includes("invalid_credentials") ||
+      lower.includes("invalid email or password") ||
+      lower.includes("email not confirmed")
+    ) {
+      return t("invalidCredentials");
+    }
+
+    if (
+      lower.includes("failed to fetch") ||
+      lower.includes("networkerror") ||
+      lower.includes("network request failed") ||
+      lower.includes("load failed")
+    ) {
+      return t("networkError");
+    }
+
+    return message;
+  }
+
+  function setLanguage(lang) {
+    
+    currentLang = translations[lang] ? lang : "es";
+    const dict = translations[currentLang];
+
+    document.documentElement.lang = currentLang;
+    document.documentElement.dir = currentLang === "ar" ? "rtl" : "ltr";
+    localStorage.setItem("at_lang", currentLang);
+    languageSelect.value = currentLang;
+
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      const key = el.getAttribute("data-i18n");
+      if (dict[key]) el.textContent = dict[key];
+    });
+
+    document.title = "Área Profesional· Navy & Blue B2B · 2027";
+
+    const savedEmail = userEmail.getAttribute("data-email");
+    if (savedEmail) {
+      userEmail.textContent = dict.userPrefix + " " + savedEmail;
+    }
+
+    updateOrderButtonsText();
+  }
+
+  function showMessage(text, type) {
+    authMessage.className = "message show " + (type || "error");
+    authMessage.textContent = text;
+  }
+
+  function clearMessage() {
+    authMessage.className = "message";
+    authMessage.textContent = "";
+  }
+
+  function setActiveForm(name) {
+    [loginForm, resetForm, updateForm].forEach((form) => form.classList.remove("active"));
+    [tabLogin, tabReset, tabUpdate].forEach((tab) => tab.classList.remove("active"));
+    tabUpdate.style.display = "none";
+
+    if (name === "login") {
+      loginForm.classList.add("active");
+      tabLogin.classList.add("active");
+    } else if (name === "reset") {
+      resetForm.classList.add("active");
+      tabReset.classList.add("active");
+    } else if (name === "update") {
+      updateForm.classList.add("active");
+      tabUpdate.style.display = "inline-flex";
+      tabUpdate.classList.add("active");
+    }
+  }
+
+  function showAuthView() {
+    authView.style.display = "block";
+    app.style.display = "none";
+    userEmail.removeAttribute("data-email");
+    userEmail.textContent = "";
+    userBadge.classList.remove("show");
+    currentSession = null;
+    hideOrdersPanel();
+  }
+
+  function showAppView(session) {
+    authView.style.display = "none";
+    app.style.display = "block";
+    clearMessage();
+    currentSession = session || null;
+
+    const email = session && session.user && session.user.email ? session.user.email : "";
+    if (email) {
+      userEmail.setAttribute("data-email", email);
+      userEmail.textContent = t("userPrefix") + " " + email;
+      userBadge.classList.add("show");
+    } else {
+      userEmail.removeAttribute("data-email");
+      userEmail.textContent = "";
+      userBadge.classList.remove("show");
+    }
+  }
+
+  function hideSplash() {
+    if (splashHidden) return;
+    splashHidden = true;
+    splash.classList.add("hide");
+    setTimeout(() => {
+      if (splash && splash.parentNode) splash.parentNode.removeChild(splash);
+    }, 700);
+  }
+
+  function abrirAvisosAutomaticamente() {
+    const panel = document.getElementById("avisosPanel");
+    if (panel) {
+      panel.classList.add("activo");
+    }
+    const backdrop = document.getElementById("avisosBackdrop");
+    if (backdrop) {
+      backdrop.classList.add("activo");
+    }
+  }
+
+  function cerrarAvisos() {
+    const panel = document.getElementById("avisosPanel");
+    if (panel) {
+      panel.classList.remove("activo");
+    }
+    const backdrop = document.getElementById("avisosBackdrop");
+    if (backdrop) {
+      backdrop.classList.remove("activo");
+    }
+  }
+
+  function setupInstallPrompt() {
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.classList.add("show");
+      installHint.style.display = "block";
+    });
+
+    installBtn.addEventListener("click", async () => {
+      if (!deferredPrompt) {
+        installHint.style.display = "block";
+        return;
+      }
+
+      deferredPrompt.prompt();
+      try {
+        await deferredPrompt.userChoice;
+      } catch (_) {}
+
+      deferredPrompt = null;
+      installBtn.classList.remove("show");
+    });
+
+    window.addEventListener("appinstalled", () => {
+      installBtn.classList.remove("show");
+    });
+  }
+
+  function isSupabaseConfigured() {
+    return typeof SUPABASE_URL === "string" &&
+      typeof SUPABASE_ANON_KEY === "string" &&
+      SUPABASE_URL.startsWith("https://") &&
+      SUPABASE_URL.includes(".supabase.co") &&
+      SUPABASE_ANON_KEY.length > 20;
+  }
+
+  function getHashParams() {
+    return new URLSearchParams((window.location.hash || "").replace(/^#/, ""));
+  }
+
+  function isRecoveryMode() {
+    const search = new URLSearchParams(window.location.search);
+    const hash = getHashParams();
+    return search.get("type") === "recovery" || hash.get("type") === "recovery";
+  }
+
+  async function applyAuthCallbackIfNeeded() {
+    const hash = getHashParams();
+    const accessToken = hash.get("access_token");
+    const refreshToken = hash.get("refresh_token");
+    const type = hash.get("type");
+
+    if (accessToken && refreshToken) {
+      const { error } = await supabase.auth.setSession({
+        access_token: accessToken,
+        refresh_token: refreshToken
+      });
+
+      if (error) throw error;
+
+      const search = new URLSearchParams(window.location.search);
+      if (type) search.set("type", type);
+
+      const cleanUrl = window.location.pathname + (search.toString() ? "?" + search.toString() : "");
+      window.history.replaceState({}, "", cleanUrl);
+      return;
+    }
+
+    const search = new URLSearchParams(window.location.search);
+    const code = search.get("code");
+
+    if (code) {
+      const { error } = await supabase.auth.exchangeCodeForSession(window.location.href);
+      if (error) throw error;
+
+      const cleanSearch = new URLSearchParams();
+      if (search.get("type")) cleanSearch.set("type", search.get("type"));
+
+      const cleanUrl = window.location.pathname + (cleanSearch.toString() ? "?" + cleanSearch.toString() : "");
+      window.history.replaceState({}, "", cleanUrl);
+    }
+  }
+
+  function escapeHtml(value) {
+    return String(value == null ? "" : value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  function formatDate(value) {
+    if (!value) return "—";
+    const d = new Date(value);
+    if (Number.isNaN(d.getTime())) return value;
+    return d.toLocaleString(currentLang === "ar" ? "ar" : currentLang === "en" ? "en-GB" : currentLang === "pt" ? "pt-PT" : currentLang === "it" ? "it-IT" : "es-ES", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+  }
+
+  function formatCurrency(value) {
+    if (value === null || value === undefined || value === "") return "—";
+    const num = Number(value);
+    if (Number.isNaN(num)) return "—";
+    try {
+      return new Intl.NumberFormat(
+        currentLang === "en" ? "en-GB" :
+        currentLang === "pt" ? "pt-PT" :
+        currentLang === "it" ? "it-IT" :
+        currentLang === "ar" ? "ar" : "es-ES",
+        { style: "currency", currency: "EUR" }
+      ).format(num);
+    } catch (_) {
+      return num.toFixed(2) + " €";
+    }
+  }
+
+  function translateOrderType(tipo) {
+    const normalized = String(tipo || "").toLowerCase();
+    if (normalized === "repeticion" || normalized === "repeticiones" || normalized === "repeat" || normalized === "repetition") {
+      return t("orderTypeRepeat");
+    }
+    return t("orderTypeStock");
+  }
+
+  function updateOrderButtonsText() {
+    document.querySelectorAll(".toggleOrderDetailBtn").forEach((btn) => {
+      const isOpen = btn.getAttribute("data-open") === "true";
+      btn.textContent = isOpen ? t("orderHideButton") : t("orderDetailButton");
+    });
+  }
+
+  function hideOrdersPanel() {
+    ordersPanel.classList.remove("show");
+  }
+
+  function showOrdersPanel() {
+    ordersPanel.classList.add("show");
+    ordersPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function renderOrders(items) {
+    ordersList.innerHTML = "";
+
+    if (!Array.isArray(items) || !items.length) {
+      ordersEmpty.style.display = "block";
+      return;
+    }
+
+    ordersEmpty.style.display = "none";
+
+    const html = items.map((pedido, index) => {
+      const detailId = "order-detail-" + index + "-" + String(pedido.id || "x");
+      return `
+        <article class="orderItem">
+          <div class="orderHead">
+            <div class="orderMeta">
+              <h4 class="orderId">#${escapeHtml(pedido.id || "")}</h4>
+              <p class="orderDate">${escapeHtml(t("orderLabelDate"))}: ${escapeHtml(formatDate(pedido.fecha))}</p>
+              <p class="orderType">${escapeHtml(t("orderLabelType"))}: ${escapeHtml(translateOrderType(pedido.tipo))}</p>
+              <p class="orderClient">${escapeHtml(t("orderLabelClient"))}: ${escapeHtml(pedido.cliente || "")}</p>
+            </div>
+
+            <div class="orderRight">
+              <div class="orderTotal">${escapeHtml(t("orderLabelTotal"))}: ${escapeHtml(formatCurrency(pedido.total))}</div>
+              <button class="ghostBtn toggleOrderDetailBtn" type="button" data-target="${detailId}" data-open="false">${escapeHtml(t("orderDetailButton"))}</button>
+            </div>
+          </div>
+
+          <div id="${detailId}" class="orderDetail">
+            <div class="orderDetailBox">
+              <pre class="orderDetailPre">${escapeHtml(JSON.stringify(pedido.contenido ?? {}, null, 2))}</pre>
+            </div>
+          </div>
+        </article>
+      `;
+    }).join("");
+
+    ordersList.innerHTML = html;
+    bindOrderDetailButtons();
+    updateOrderButtonsText();
+  }
+
+  function bindOrderDetailButtons() {
+    document.querySelectorAll(".toggleOrderDetailBtn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const targetId = btn.getAttribute("data-target");
+        const detail = document.getElementById(targetId);
+        if (!detail) return;
+
+        const open = detail.classList.toggle("show");
+        btn.setAttribute("data-open", open ? "true" : "false");
+        btn.textContent = open ? t("orderHideButton") : t("orderDetailButton");
+      });
+    });
+  }
+
+  async function loadMyOrders() {
+    ordersLoading.style.display = "block";
+    ordersEmpty.style.display = "none";
+    ordersList.innerHTML = "";
+
+    if (!supabase || !currentSession || !currentSession.user || !currentSession.user.email) {
+      ordersLoading.style.display = "none";
+      ordersEmpty.style.display = "block";
+      return;
+    }
+
+    try {
+      const email = currentSession.user.email;
+
+      const { data, error } = await supabase
+        .from("pedidos")
+        .select("id, fecha, cliente, tipo, contenido, total")
+        .eq("cliente", email)
+        .order("fecha", { ascending: false });
+
+      if (error) throw error;
+
+      renderOrders(Array.isArray(data) ? data : []);
+    } catch (err) {
+      ordersList.innerHTML = "";
+      ordersEmpty.style.display = "block";
+      ordersEmpty.textContent = getFriendlyError(err) || t("ordersLoadError");
+    } finally {
+      ordersLoading.style.display = "none";
+    }
+  }
+
+  async function openMyOrders() {
+    showOrdersPanel();
+    await loadMyOrders();
+  }
+
+  async function initSupabase() {
+    showAuthView();
+
+    if (!isSupabaseConfigured() || !window.supabase || typeof window.supabase.createClient !== "function") {
+      showMessage(t("missingSupabase"), "error");
+      hideSplash();
+      return;
+    }
+
+    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true
+      }
+    });
+
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "PASSWORD_RECOVERY") {
+        clearMessage();
+        setActiveForm("update");
+        showAuthView();
+        hideSplash();
+        return;
+      }
+
+      if (session) {
+        showAppView(session);
+      } else {
+        showAuthView();
+      }
+
+      if (event === "SIGNED_OUT") {
+        loginPassword.value = "";
+      }
+
+      hideSplash();
+    });
+
+    try {
+      await applyAuthCallbackIfNeeded();
+
+      const { data, error } = await supabase.auth.getSession();
+
+      if (error) {
+        showAuthView();
+        showMessage(getFriendlyError(error), "error");
+        hideSplash();
+        return;
+      }
+
+      if (isRecoveryMode()) {
+        showAuthView();
+        setActiveForm("update");
+        hideSplash();
+        return;
+      }
+
+      if (data && data.session) {
+        showAppView(data.session);
+      } else {
+        showAuthView();
+        setActiveForm("login");
+      }
+
+      hideSplash();
+    } catch (err) {
+      showAuthView();
+      showMessage(getFriendlyError(err), "error");
+      hideSplash();
+    }
+  }
+
+  tabLogin.addEventListener("click", () => {
+    clearMessage();
+    setActiveForm("login");
+  });
+
+  tabReset.addEventListener("click", () => {
+    clearMessage();
+    setActiveForm("reset");
+  });
+
+  tabUpdate.addEventListener("click", () => {
+    clearMessage();
+    setActiveForm("update");
+  });
+
+  goToReset.addEventListener("click", () => {
+    clearMessage();
+    setActiveForm("reset");
+    resetEmail.value = loginEmail.value || "";
+  });
+
+  backToLogin.addEventListener("click", () => {
+    clearMessage();
+    setActiveForm("login");
+  });
+
+  loginForm.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    clearMessage();
+
+    if (!supabase) {
+      showMessage(t("missingSupabase"), "error");
+      return;
+    }
+
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: loginEmail.value.trim(),
+        password: loginPassword.value
+      });
+
+      if (error) {
+        showMessage(getFriendlyError(error), "error");
+        return;
+      }
+
+      if (data && data.session) {
+        showAppView(data.session);
+      }
+
+      showMessage(t("loginSuccess"), "success");
+    } catch (err) {
+      showMessage(getFriendlyError(err), "error");
+    }
+  });
+
+  resetForm.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    clearMessage();
+
+    if (!supabase) {
+      showMessage(t("missingSupabase"), "error");
+      return;
+    }
+
+    const redirectTo = window.location.origin + window.location.pathname + "?type=recovery";
+
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(resetEmail.value.trim(), {
+        redirectTo: redirectTo
+      });
+
+      if (error) {
+        showMessage(getFriendlyError(error), "error");
+        return;
+      }
+
+      showMessage(t("resetSuccess"), "success");
+    } catch (err) {
+      showMessage(getFriendlyError(err), "error");
+    }
+  });
+
+  updateForm.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    clearMessage();
+
+    if (!supabase) {
+      showMessage(t("missingSupabase"), "error");
+      return;
+    }
+
+    if ((newPassword.value || "").length < 6) {
+      showMessage(t("passwordShort"), "error");
+      return;
+    }
+
+    if (newPassword.value !== confirmPassword.value) {
+      showMessage(t("passwordMismatch"), "error");
+      return;
+    }
+
+    try {
+      const { error } = await supabase.auth.updateUser({
+        password: newPassword.value
+      });
+
+      if (error) {
+        showMessage(getFriendlyError(error), "error");
+        return;
+      }
+
+      showMessage(t("updateSuccess"), "success");
+      newPassword.value = "";
+      confirmPassword.value = "";
+      window.history.replaceState({}, "", window.location.pathname);
+      setActiveForm("login");
+    } catch (err) {
+      showMessage(getFriendlyError(err), "error");
+    }
+  });
+
+  logoutBtn.addEventListener("click", async function () {
+    clearMessage();
+
+    if (!supabase) return;
+
+    try {
+      const { error } = await supabase.auth.signOut();
+
+      if (error) {
+        showMessage(getFriendlyError(error), "error");
+        return;
+      }
+
+      setActiveForm("login");
+      showAuthView();
+      showMessage(t("logoutSuccess"), "success");
+    } catch (err) {
+      showMessage(getFriendlyError(err), "error");
+    }
+  });
+
+  languageSelect.addEventListener("change", function () {
+    setLanguage(this.value);
+  });
+
+  openOrdersBtn.addEventListener("click", async function () {
+    await openMyOrders();
+  });
+
+  refreshOrdersBtn.addEventListener("click", async function () {
+    await loadMyOrders();
+  });
+
+  closeOrdersBtn.addEventListener("click", function () {
+    hideOrdersPanel();
+  });
+
+  if (avisosBtn) {
+    avisosBtn.addEventListener("click", function () {
+      abrirAvisosAutomaticamente();
+    });
+  }
+
+  if (cerrarAvisosBtn) {
+    cerrarAvisosBtn.addEventListener("click", function () {
+      cerrarAvisos();
+    });
+  }
+
+  if (avisosBackdrop) {
+    avisosBackdrop.addEventListener("click", function () {
+      cerrarAvisos();
+    });
+  }
+
+  setLanguage(currentLang);
+  setupInstallPrompt();
+
+  window.addEventListener("load", async function () {
+    try {
+      await initSupabase();
+    } catch (err) {
+      showMessage(getFriendlyError(err), "error");
+      hideSplash();
+    }
+
+    setTimeout(() => {
+      hideSplash();
+      const panel = document.getElementById("avisosPanel");
+      if (panel) {
+        panel.classList.add("activo");
+      }
+      const backdrop = document.getElementById("avisosBackdrop");
+      if (backdrop) {
+        backdrop.classList.add("activo");
+      }
+    }, 3000);
+  });
+})();
+</script>
+
+</body>
+</html>
