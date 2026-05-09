@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Área Profesional B2B · Abuela Tata</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/png" href="./assets/logo.png">
+<link rel="apple-touch-icon" href="./assets/logo.png">  
+<meta name="theme-color" content="#d8b15f">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
+<link rel="stylesheet" href="./css/main.css">
+</head>
+
+<body>
+
+<div id="splash" aria-hidden="true">
+  <div class="splash-bg"></div>
+  <div class="splash-content">
+    <div class="splash-photo-wrap">
+      <img class="splash-photo" src="images/portada-area.jpg" alt="Abuela Tata">
+    </div>
+
+    <div class="splash-copy">
+      <img class="splash-logo" src="assets/Navy&blue.png" alt="Logo Navy&blue">
+      <div class="splash-brand">Abuela Tata</div>
+      <h1 class="splash-title" data-i18n="splashTitle">Bienvenid@ al Área Profesional</h1>
+      <p class="splash-text" data-i18n="splashText">Un espacio pensado para realizar pedidos, consultar stock y acceder a toda la documentación de campaña.</p>
+    </div>
+  </div>
+</div>
+
+<div id="authView">
+  <div class="authShell">
+    <div class="authCard">
+      <div class="authVisual">
+        <div class="authVisualInner">
+          <img class="authVisualLogo" src="assets/navy&blue.png" alt="Logo navy & blue">
+          <h2 class="authVisualBrand">Abuela Tata</h2>
+          <p class="authVisualText" data-i18n="authVisualText">Un acceso privado y seguro para clientes profesionales.</p>
+        </div>
+      </div>
+
+      <div class="authPanel">
+        <div class="authHeader">
+          <h1 class="authTitle" data-i18n="authTitle">Acceso privado</h1>
+          <p class="authSubtitle" data-i18n="authSubtitle">Introduce tu email y contraseña para entrar en tu Área Profesional.</p>
+        </div>
+
+        <div class="authTabs">
+          <button id="tabLogin" class="authTab active" type="button" data-i18n="tabLogin">Entrar</button>
+          <button id="tabReset" class="authTab" type="button" data-i18n="tabReset">Recuperar contraseña</button>
+          <button id="tabUpdate" class="authTab" type="button" data-i18n="tabUpdate" style="display:none;">Nueva contraseña</button>
+        </div>
+
+        <div id="authMessage" class="message" aria-live="polite"></div>
+
+        <form id="loginForm" class="authForm active" autocomplete="on">
+          <div class="field">
+            <label class="label" for="loginEmail" data-i18n="emailLabel">Email</label>
+            <input id="loginEmail" class="input" type="email" autocomplete="email" required>
+          </div>
+
+          <div class="field">
+            <label class="label" for="loginPassword" data-i18n="passwordLabel">Contraseña</label>
+            <input id="loginPassword" class="input" type="password" autocomplete="current-password" required>
+          </div>
+
+          <div class="authActions">
+            <button class="authButton" type="submit" data-i18n="loginButton">Entrar</button>
+          </div>
+
+          <div class="authSwitch">
+            <span data-i18n="forgotInline">¿Has olvidado tu contraseña?</span>
+            <button id="goToReset" class="linkButton" type="button" data-i18n="recoverHere">Recupérala aquí</button>
+          </div>
+        </form>
+
+        <form id="resetForm" class="authForm" autocomplete="on">
+          <div class="field">
+            <label class="label" for="resetEmail" data-i18n="emailLabel">Email</label>
+            <input id="resetEmail" class="input" type="email" autocomplete="email" required>
+          </div>
+
+          <div class="authActions">
+            <button class="authButton" type="submit" data-i18n="resetButton">Enviar enlace</button>
+            <button id="backToLogin" class="authButton secondary" type="button" data-i18n="backToLogin">Volver al acceso</button>
+          </div>
+
+          <div class="authMeta" data-i18n="resetHelp">
+            Te enviaremos un enlace seguro para restablecer tu contraseña.
+          </div>
+        </form>
+
+        <form id="updateForm" class="authForm" autocomplete="on">
+          <div class="field">
+            <label class="label" for="newPassword" data-i18n="newPasswordLabel">Nueva contraseña</label>
+            <input id="newPassword" class="input" type="password" autocomplete="new-password" minlength="6">
+          </div>
+
+          <div class="field">
+            <label class="label" for="confirmPassword" data-i18n="confirmPasswordLabel">Confirmar contraseña</label>
+            <input id="confirmPassword" class="input" type="password" autocomplete="new-password" minlength="6">
+          </div>
+
+          <div class="authActions">
+            <button class="authButton" type="submit" data-i18n="savePasswordButton">Guardar nueva contraseña</button>
+          </div>
+
+          <div class="authMeta" data-i18n="updateHelp">
+            Introduce tu nueva contraseña para completar la recuperación de acceso.
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="app">
+  <div class="topbar">
+    <div class="topbarRow">
+      <div class="brand">
+        <img src="assets/logos/navy-blue.png" class="logo" alt="Logo Navy & blue">
+        <div class="brandText">
+          <h1 class="title" data-i18n="appTitle">Navy & Blue B2B - 2027</h1>
+          <p class="subtitle" data-i18n="appSubtitle">Area profesional para representantes y clientes .</p>
+        </div>
+      </div>
+
+      <div class="topActions">
+        <div id="userBadge" class="userBadge">
+          <span id="userEmail"></span>
+        </div>
+
+        <div class="selectWrap">
+          <select id="languageSelect" class="langSelect" aria-label="Idioma">
+            <option value="es">Español</option>
+            <option value="en">English</option>
+            <option value="pt">Português</option>
+            <option value="it">Italiano</option>
+            <option value="ar">العربية</option>
+          </select>
+        </div>
+
+        <button id="installBtn" class="installBtn" type="button" data-i18n="installButton">Instalar app</button>
+        <button id="logoutBtn" class="logoutBtn" type="button" data-i18n="logoutButton">Cerrar sesión</button>
+      </div>
+    </div>
+
+    <div id="installHint" class="installHint" data-i18n="installHint">
+      Si no aparece el aviso automático, usa “Añadir a pantalla de inicio” o “Instalar aplicación” en el navegador.
+    </div>
+  </div>
+
+  <section class="hero">
+    <h2 class="heroTitle" data-i18n="heroTitle">Bienvenido al Área Profesional</h2>
+    <p class="heroText" data-i18n="heroText">Un acceso rápido y elegante para realizar pedidos, consultar stock y descargar toda la documentación de campaña.</p>
+  </section>
+
+  <div class="sectionTitle" data-i18n="sectionOrders">PEDIDOS</div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="cardInfo">
+        <div class="cardTitle" data-i18n="repeatTitle">Repetición de campaña</div>
+        <div class="cardText" data-i18n="repeatText">Producción según calendario</div>
+      </div>
+      <a class="button" href="pedidos.html?modo=repeticiones" data-i18n="enterButton">Entrar →</a>
+    </div>
+
+    <div class="card">
+      <div class="cardInfo">
+        <div class="cardTitle" data-i18n="stockTitle">Stock disponible</div>
+        <div class="cardText" data-i18n="stockText">Entrega inmediata</div>
+      </div>
+      <a class="button" href="pedidos.html?modo=stock" data-i18n="enterButton">Entrar →</a>
+    </div>
+
+    <div class="card">
+      <div class="cardInfo">
+        <div class="cardTitle" data-i18n="myOrdersTitle">Mis pedidos</div>
+        <div class="cardText" data-i18n="myOrdersText">Consulta tus pedidos guardados</div>
+      </div>
+      <button id="openOrdersBtn" class="button" type="button" data-i18n="viewButton">Ver →</button>
+    </div>
+  </div>
+
+  <section id="ordersPanel" class="ordersPanel" aria-live="polite">
+    <div class="ordersPanelHead">
+      <div>
+        <h3 class="ordersPanelTitle" data-i18n="myOrdersPanelTitle">Mis pedidos</h3>
+        <p class="ordersPanelText" data-i18n="myOrdersPanelText">Aquí puedes consultar únicamente los pedidos asociados a tu cuenta.</p>
+      </div>
+
+      <div class="ordersPanelActions">
+        <button id="refreshOrdersBtn" class="ghostBtn" type="button" data-i18n="refreshButton">Actualizar</button>
+        <button id="closeOrdersBtn" class="ghostBtn" type="button" data-i18n="closeButton">Cerrar</button>
+      </div>
+    </div>
+
+    <div id="ordersLoading" class="ordersLoading" style="display:none;" data-i18n="loadingOrders">Cargando pedidos…</div>
+    <div id="ordersEmpty" class="ordersEmpty" style="display:none;" data-i18n="emptyOrders">Todavía no tienes pedidos guardados.</div>
+    <div id="ordersList" class="ordersList"></div>
+  </section>
+<section id="modulo-guia-tallas" class="modulo" style="display:none;">
+  <div class="card" style="padding:20px;">
+
+    <h2 style="margin-bottom:10px;">Guía de tallas</h2>
+    <p style="margin-bottom:16px; color:#8b6f5b;">
+      Calculadora de tallas Abuela Tata.
+    </p>
+
+    <a class="button" 
+   href="https://abuelatata.github.io/calculadora-talla-abuela-tata-general/" 
+   target="_blank" 
+   rel="noopener">
+  Abrir calculadora →
+</a>
+
+  </div>
+</section>
+
+  <div class="sectionTitle" data-i18n="sectionDocs">DOCUMENTACIÓN</div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="cardInfo">
+        <div class="cardTitle" data-i18n="mediaTitle">Descarga multimedia</div>
+        <div class="cardText" data-i18n="mediaText">Imágenes en alta resolución</div>
+      </div>
+      <a class="button" href="multimedia.html" data-i18n="enterButton">Entrar →</a>
+    </div>
+
+    <div class="card">
+      <div class="cardInfo">
+        <div class="cardTitle" data-i18n="ratesTitle">Tarifas</div>
+        <div class="cardText" data-i18n="ratesText">Precios de campaña</div>
+      </div>
+      <a class="button" href="./docs/tarifa-ceremonia-26-abuela-tata.pdf" target="_blank" rel="noopener" data-i18n="enterButton">Entrar →</a>
+    </div>
+
+    <div class="card">
+      <div class="cardInfo">
+        <div class="cardTitle">Guía de Referencias</div>
+        <div class="cardText">Estructura de códigos, colores y familias</div>
+      </div>
+      <a class="button" href="referencias.html">Entrar →</a>
+    </div>
+
+        <div class="card">
+      <div class="cardInfo">
+       <div class="cardTitle">Guía de tallas</div>
+       <div class="cardText">Calculadora de tallas inteligente.</div>
+     </div>
+     <button class="button" onclick="mostrarModulo('guia-tallas')">Abrir</button>
+    </div>
+    
+    <div class="card">
+      <div class="cardInfo">
+        <div class="cardTitle" data-i18n="conditionsTitle">Condiciones</div>
+        <div class="cardText" data-i18n="conditionsText">Calendario y normas</div>
+      </div>
+      <a class="button" href="condiciones.html" data-i18n="enterButton">Entrar →</a>
+    </div>
+
+    <div class="card">
+      <div class="cardInfo">
+        <div class="cardTitle" data-i18n="calendarTitle">Calendario de repeticiones</div>
+        <div class="cardText" data-i18n="calendarText">Fechas clave y planificación</div>
+      </div>
+      <a class="button" href="./docs/calendario-repeticiones-ceremonia-26.pdf" target="_blank" rel="noopener" data-i18n="enterButton">Entrar →</a>
+    </div>
+  </div>
+
+  <div class="footerNote" data-i18n="footerNote">
+    Diseñado para móvil, tablet y ordenador.
+  </div>
+</div>
+
+<div id="avisosPanel">
+  <div class="avisosContenido">
+    <h3>📢 Comunicaciones</h3>
+    <p>Este será nuestro espacio dedicado para compartir toda la información relevante de campaña.</p>
+    <p>Aquí os mantendremos informados de novedades, fechas de servicio, actualizaciones y cualquier comunicación importante.</p>
+    <button id="cerrarAvisosBtn" type="button">Cerrar</button>
+  </div>
+</div>
+
+<div id="avisosBtn">🔔</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./js/app.js"></script>
+
+</body>
+</html>
