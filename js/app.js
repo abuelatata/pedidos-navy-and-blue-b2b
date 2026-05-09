@@ -56,7 +56,7 @@ const cerrarAvisosBtn = document.getElementById("cerrarAvisosBtn");
 let deferredPrompt = null;
 let currentSession = null;
 
-const supabase = window.supabase.createClient(
+const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_ANON_KEY,
   {
