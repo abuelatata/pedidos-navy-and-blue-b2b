@@ -1,0 +1,42 @@
+[
+  {
+    "id": "abuelatata-comunion-27",
+    "marca": "Abuela Tata",
+    "temporada": "2027",
+    "tipo": "comunion",
+    "nombre": "Abuela Tata · Comunión 2027",
+    "activo": true,
+    "repeticiones": true,
+    "stock": true
+  },
+  {
+    "id": "navyblue-comunion-27",
+    "marca": "Navy & Blue",
+    "temporada": "2027",
+    "tipo": "comunion",
+    "nombre": "Navy & Blue · Comunión 2027",
+    "activo": true,
+    "repeticiones": true,
+    "stock": true
+  },
+  {
+    "id": "ceremonia-2027",
+    "marca": "Abuela Tata",
+    "temporada": "2027",
+    "tipo": "ceremonia",
+    "nombre": "Ceremonia 2027",
+    "activo": false,
+    "repeticiones": true,
+    "stock": true
+  },
+  {
+    "id": "verano-2027",
+    "marca": "Abuela Tata",
+    "temporada": "2027",
+    "tipo": "verano",
+    "nombre": "Verano 2027",
+    "activo": false,
+    "repeticiones": false,
+    "stock": true
+  }
+]
