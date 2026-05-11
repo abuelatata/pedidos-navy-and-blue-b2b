@@ -1,1 +1,31 @@
+{
+  "id": "verano-2027",
 
+  "name": "Verano 2027",
+
+  "brand": "Abuela Tata",
+
+  "year": 2027,
+
+  "type": "verano",
+
+  "folder": "abuela-tata-2027",
+
+  "active": true,
+
+  "modules": {
+    "pedidos": true,
+    "stock": true,
+    "repeticiones": false,
+    "documentos": true,
+    "tarifas": true,
+    "representantes": true,
+    "estadisticas": true
+  },
+
+  "permissions": {
+    "admin": true,
+    "representantes": true,
+    "clientes": true
+  }
+}
