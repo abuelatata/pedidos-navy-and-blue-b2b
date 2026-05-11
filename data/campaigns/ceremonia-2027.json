@@ -1,1 +1,27 @@
-
+{
+  "id": "ceremonia-2027",
+  "name": "Ceremonia 2027",
+  "brand": "Abuela Tata",
+  "year": 2027,
+  "type": "ceremonia",
+  "folder": "abuela-tata-2027",
+  "active": true,
+  "modules": {
+    "pedidos": true,
+    "stock": true,
+    "repeticiones": true,
+    "documentos": true,
+    "tarifas": true,
+    "representantes": true,
+    "estadisticas": true
+  },
+  "rules": {
+    "repeticionesMode": "parcial",
+    "repeticionesSoloModelosPermitidos": true
+  },
+  "permissions": {
+    "admin": true,
+    "representantes": true,
+    "clientes": true
+  }
+}
