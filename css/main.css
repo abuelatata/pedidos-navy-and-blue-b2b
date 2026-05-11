@@ -1028,3 +1028,37 @@ html[dir="rtl"] .ordersPanelText{
 html[dir="rtl"] .orderRight{
   align-items:flex-start;
 }
+.dualLogo{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  flex-wrap:wrap;
+}
+
+.logoAbuela{
+  width:70px;
+  height:auto;
+  object-fit:contain;
+}
+
+.logoNavy{
+  width:150px;
+  height:auto;
+  object-fit:contain;
+}
+
+@media(max-width:640px){
+
+  .dualLogo{
+    gap:12px;
+  }
+
+  .logoAbuela{
+    width:54px;
+  }
+
+  .logoNavy{
+    width:120px;
+  }
+
+}
