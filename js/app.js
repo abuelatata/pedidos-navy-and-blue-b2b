@@ -3,7 +3,7 @@ console.log("Área Profesional B2B · Abuela Tata cargada correctamente.");
 const SUPABASE_URL = "https://qoyrjhgjtydbcngfnyqn.supabase.co";
 
 const SUPABASE_ANON_KEY =
-"TU_SUPABASE_ANON_KEY";
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFveXJqaGdqdHlkYmNuZ2ZueXFuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5MTQ2NzQsImV4cCI6MjA4ODQ5MDY3NH0.ASOVIDOiJcuWOWExEzGBvwjjKEpZIfRLbxgVyc6Xr64";
 
 const splash = document.getElementById("splash");
 const authView = document.getElementById("authView");
@@ -40,7 +40,6 @@ const resetEmail = document.getElementById("resetEmail");
 const newPassword = document.getElementById("newPassword");
 const confirmPassword = document.getElementById("confirmPassword");
 
-const openOrdersBtn = document.getElementById("openOrdersBtn");
 const closeOrdersBtn = document.getElementById("closeOrdersBtn");
 const refreshOrdersBtn = document.getElementById("refreshOrdersBtn");
 
@@ -145,7 +144,7 @@ async function checkSession() {
     const {
       data,
       error
-    } = await supabase.auth.getSession();
+    } = await supabaseClient.auth.getSession();
 
     if (error) {
       console.error(error);
@@ -175,6 +174,123 @@ async function checkSession() {
     }
 
   }, 1500);
+}
+
+async function cargarMenuDinamico() {
+
+  const contenedor = document.getElementById("menuDinamico");
+
+  if (!contenedor) return;
+
+  contenedor.innerHTML = "";
+
+  try {
+
+    const respuesta = await fetch("./data/colecciones.json?v=" + Date.now());
+
+    if (!respuesta.ok) {
+      throw new Error("No se pudo leer data/colecciones.json");
+    }
+
+    const colecciones = await respuesta.json();
+
+    const coleccionesActivas = colecciones.filter(
+      (coleccion) => coleccion.activo === true
+    );
+
+    if (!coleccionesActivas.length) {
+
+      contenedor.innerHTML = `
+        <div class="card">
+          <div class="cardInfo">
+            <div class="cardTitle">No hay campañas activas</div>
+            <div class="cardText">Actualmente no hay campañas disponibles para pedido.</div>
+          </div>
+        </div>
+      `;
+
+      return;
+    }
+
+    coleccionesActivas.forEach((coleccion) => {
+
+      const modoPrincipal = coleccion.repeticiones ? "repeticiones" : "stock";
+
+      const textoAccion = coleccion.repeticiones
+        ? "Repetición de campaña"
+        : "Stock disponible";
+
+      const textoEntrega = coleccion.repeticiones
+        ? "Producción según calendario"
+        : "Entrega inmediata";
+
+      const card = document.createElement("div");
+
+      card.className = "card";
+
+      card.innerHTML = `
+        <div class="cardInfo">
+          <div class="cardTitle">${coleccion.nombre}</div>
+          <div class="cardText">${textoAccion} · ${textoEntrega}</div>
+        </div>
+
+        <a class="button"
+           href="pedidos.html?coleccion=${coleccion.id}&modo=${modoPrincipal}">
+           Entrar →
+        </a>
+      `;
+
+      contenedor.appendChild(card);
+    });
+
+    const cardMisPedidos = document.createElement("div");
+
+    cardMisPedidos.className = "card";
+
+    cardMisPedidos.innerHTML = `
+      <div class="cardInfo">
+        <div class="cardTitle">Mis pedidos</div>
+        <div class="cardText">Consulta tus pedidos guardados</div>
+      </div>
+
+      <button id="openOrdersBtnDinamico"
+              class="button"
+              type="button">
+        Ver →
+      </button>
+    `;
+
+    contenedor.appendChild(cardMisPedidos);
+
+    document
+      .getElementById("openOrdersBtnDinamico")
+      ?.addEventListener("click", async () => {
+
+        if (!ordersPanel) return;
+
+        ordersPanel.classList.add("show");
+
+        await loadMyOrders();
+
+        ordersPanel.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      });
+
+  } catch (error) {
+
+    console.error("Error cargando menú dinámico:", error);
+
+    contenedor.innerHTML = `
+      <div class="card">
+        <div class="cardInfo">
+          <div class="cardTitle">Error al cargar campañas</div>
+          <div class="cardText">Revisa data/colecciones.json</div>
+        </div>
+      </div>
+    `;
+  }
 }
 
 tabLogin?.addEventListener("click", () => {
@@ -212,7 +328,7 @@ loginForm?.addEventListener("submit", async function (e) {
     const {
       data,
       error
-    } = await supabase.auth.signInWithPassword({
+    } = await supabaseClient.auth.signInWithPassword({
 
       email: loginEmail.value.trim(),
       password: loginPassword.value
@@ -226,9 +342,12 @@ loginForm?.addEventListener("submit", async function (e) {
 
     showAppView(data.session);
 
+    await cargarMenuDinamico();
+
   } catch (err) {
 
     console.error(err);
+
     showMessage("No se pudo iniciar sesión.");
   }
 });
@@ -243,7 +362,7 @@ resetForm?.addEventListener("submit", async function (e) {
 
     const {
       error
-    } = await supabase.auth.resetPasswordForEmail(
+    } = await supabaseClient.auth.resetPasswordForEmail(
       resetEmail.value.trim(),
       {
         redirectTo:
@@ -290,7 +409,7 @@ updateForm?.addEventListener("submit", async function (e) {
 
     const {
       error
-    } = await supabase.auth.updateUser({
+    } = await supabaseClient.auth.updateUser({
 
       password: newPassword.value
     });
@@ -322,7 +441,7 @@ logoutBtn?.addEventListener("click", async () => {
 
   try {
 
-    await supabase.auth.signOut();
+    await supabaseClient.auth.signOut();
 
     showAuthView();
 
@@ -345,7 +464,7 @@ async function loadMyOrders() {
     const {
       data,
       error
-    } = await supabase
+    } = await supabaseClient
       .from("pedidos")
       .select("*")
       .eq(
@@ -375,6 +494,7 @@ async function loadMyOrders() {
       div.innerHTML = `
         <div class="orderHead">
           <div class="orderMeta">
+
             <div class="orderId">
               Pedido #${pedido.id || ""}
             </div>
@@ -382,6 +502,7 @@ async function loadMyOrders() {
             <div class="orderDate">
               ${pedido.fecha || ""}
             </div>
+
           </div>
 
           <div class="orderTotal">
@@ -402,13 +523,6 @@ async function loadMyOrders() {
 
   ordersLoading.style.display = "none";
 }
-
-openOrdersBtn?.addEventListener("click", async () => {
-
-  ordersPanel.classList.add("show");
-
-  await loadMyOrders();
-});
 
 closeOrdersBtn?.addEventListener("click", () => {
 
@@ -460,4 +574,5 @@ cerrarAvisosBtn?.addEventListener("click", () => {
 window.addEventListener("load", async () => {
 
   await checkSession();
+  await cargarMenuDinamico();
 });
