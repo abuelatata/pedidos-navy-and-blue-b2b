@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -126,9 +127,10 @@
     <div class="topbarRow">
       <div class="brand">
         <div class="dualLogo">
-  <img src="assets/logo-abuela-tata.png" class="logoAbuela" alt="Abuela Tata">
-  <img src="assets/logo-navy-blue.png" class="logoNavy" alt="Navy & Blue">
-</div>
+          <img src="assets/logo-abuela-tata.png" class="logoAbuela" alt="Abuela Tata">
+          <img src="assets/logo-navy-blue.png" class="logoNavy" alt="Navy & Blue">
+        </div>
+
         <div class="brandText">
           <h1 class="title" data-i18n="appTitle">Área Profesional B2B · Abuela Tata</h1>
           <p class="subtitle" data-i18n="appSubtitle">Acceso para representantes y clientes profesionales, pedidos y documentación de campaña.</p>
@@ -167,31 +169,7 @@
 
   <div class="sectionTitle" data-i18n="sectionOrders">PEDIDOS</div>
 
-  <div class="grid">
-    <div class="card">
-      <div class="cardInfo">
-        <div class="cardTitle" data-i18n="repeatTitle">Repetición de campaña</div>
-        <div class="cardText" data-i18n="repeatText">Producción según calendario</div>
-      </div>
-      <a class="button" href="pedidos.html?modo=repeticiones" data-i18n="enterButton">Entrar →</a>
-    </div>
-
-    <div class="card">
-      <div class="cardInfo">
-        <div class="cardTitle" data-i18n="stockTitle">Stock disponible</div>
-        <div class="cardText" data-i18n="stockText">Entrega inmediata</div>
-      </div>
-      <a class="button" href="pedidos.html?modo=stock" data-i18n="enterButton">Entrar →</a>
-    </div>
-
-    <div class="card">
-      <div class="cardInfo">
-        <div class="cardTitle" data-i18n="myOrdersTitle">Mis pedidos</div>
-        <div class="cardText" data-i18n="myOrdersText">Consulta tus pedidos guardados</div>
-      </div>
-      <button id="openOrdersBtn" class="button" type="button" data-i18n="viewButton">Ver →</button>
-    </div>
-  </div>
+  <div class="grid" id="menuDinamico"></div>
 
   <section id="ordersPanel" class="ordersPanel" aria-live="polite">
     <div class="ordersPanelHead">
@@ -284,3 +262,4 @@
 
 </body>
 </html>
+```
