@@ -1,0 +1,22 @@
+[
+  {
+    "referencia": "2500401",
+    "nombre": "Violette",
+    "coleccion": "abuelatata-comunion-27",
+    "familia": "401",
+    "tipo": "vestido",
+    "repetible": true,
+    "activo": true,
+    "imagen": "images/abuelatata-comunion-27/2500401.jpg"
+  },
+  {
+    "referencia": "2500402",
+    "nombre": "Simonetta",
+    "coleccion": "abuelatata-comunion-27",
+    "familia": "402",
+    "tipo": "vestido",
+    "repetible": true,
+    "activo": true,
+    "imagen": "images/abuelatata-comunion-27/2500402.jpg"
+  }
+]
