@@ -175,6 +175,20 @@ async function checkSession() {
 
   }, 1500);
 }
+function obtenerPlantillaPedido(coleccion) {
+
+  if (!coleccion || !coleccion.plantillaPedido) {
+
+    console.warn(
+      "Colección sin plantillaPedido definida:",
+      coleccion
+    );
+
+    return null;
+  }
+
+  return coleccion.plantillaPedido;
+}
 
 async function cargarMenuDinamico() {
 
