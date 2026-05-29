@@ -1035,16 +1035,12 @@ html[dir="rtl"] .orderRight{
   flex-wrap:wrap;
 }
 
-.logoAbuela{
-  width:70px;
-  height:auto;
-  object-fit:contain;
-}
-
-.logoNavy{
-  width:150px;
-  height:auto;
-  object-fit:contain;
+.logoAbuela,
+.logoNavy {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  display: block;
 }
 
 @media(max-width:640px){
@@ -1053,12 +1049,8 @@ html[dir="rtl"] .orderRight{
     gap:12px;
   }
 
-  .logoAbuela{
-    width:54px;
-  }
-
-  .logoNavy{
-    width:120px;
-  }
-
+  .logoAbuela,
+.logoNavy {
+  width: 90px;
+  height: 90px;
 }
