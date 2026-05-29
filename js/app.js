@@ -227,7 +227,13 @@ async function cargarMenuDinamico() {
     }
 
     coleccionesActivas.forEach((coleccion) => {
+const plantillaActiva = obtenerPlantillaPedido(coleccion);
 
+console.log(
+  "Plantilla de pedido activa:",
+  plantillaActiva
+);
+      
       const modoPrincipal = coleccion.repeticiones ? "repeticiones" : "stock";
 
       const textoAccion = coleccion.repeticiones
