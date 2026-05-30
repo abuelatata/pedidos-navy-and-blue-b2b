@@ -672,7 +672,8 @@ body{
 
 flex-shrink:0;
 margin-left:auto;
-  
+  min-width:110px;
+text-align:center;
   border:1px solid #cadad8;
   transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
   box-shadow:0 4px 14px rgba(60,40,25,.08);
