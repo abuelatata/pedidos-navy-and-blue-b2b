@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campaña</title>
+
+<link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="hero">
+        <h1 id="tituloCampania">Campaña</h1>
+        <p id="descripcionCampania">
+            Selecciona la opción que deseas utilizar.
+        </p>
+    </div>
+
+    <div id="opcionesCampania" class="cardsGrid">
+    </div>
+
+</div>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+const coleccion = params.get("coleccion");
+const plantilla = params.get("plantilla");
+
+document.getElementById("tituloCampania").textContent =
+coleccion || "Campaña";
+
+const contenedor =
+document.getElementById("opcionesCampania");
+
+contenedor.innerHTML = `
+
+<div class="card">
+    <div class="cardInfo">
+        <div class="cardTitle">Stock disponible</div>
+        <div class="cardText">
+            Consulta y realiza pedidos de artículos disponibles.
+        </div>
+    </div>
+
+    <a class="button"
+       href="pedidos.html?coleccion=${coleccion}&modo=stock&plantilla=${plantilla}">
+       Entrar →
+    </a>
+</div>
+
+<div class="card">
+    <div class="cardInfo">
+        <div class="cardTitle">Repeticiones</div>
+        <div class="cardText">
+            Pedido de fabricación según campaña.
+        </div>
+    </div>
+
+    <a class="button"
+       href="pedidos.html?coleccion=${coleccion}&modo=repeticiones&plantilla=${plantilla}">
+       Entrar →
+    </a>
+</div>
+
+`;
+
+</script>
+
+</body>
+</html>
