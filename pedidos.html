@@ -21,7 +21,24 @@ const params = new URLSearchParams(window.location.search);
 const coleccion = params.get("coleccion");
 const modo = params.get("modo");
 const plantilla = params.get("plantilla");
+if (plantilla === "abuela_tata_comunion") {
+    document.body.style.background = "#f5f5f5";
 
+    const titulo = document.querySelector("h1");
+    titulo.textContent = "Pedidos Abuela Tata Comunión 2027";
+
+    console.log("Cargando plantilla Abuela Tata");
+}
+
+if (plantilla === "navy_blue_comunion") {
+    document.body.style.background = "#eef4ff";
+
+    const titulo = document.querySelector("h1");
+    titulo.textContent = "Pedidos Navy & Blue Comunión 2027";
+
+    console.log("Cargando plantilla Navy & Blue");
+}
+  
 document.getElementById("coleccion").textContent =
 "Colección: " + coleccion;
 
