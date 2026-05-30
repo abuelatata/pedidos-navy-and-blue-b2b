@@ -251,7 +251,7 @@ console.log(
       card.innerHTML = `
         <div class="cardInfo">
          <div class="cardTitle">${coleccion.marca} · ${coleccion.nombre}</div>
-          <div class="cardText">Accede a pedidos, stock y documentación de la campaña.
+         <div class="cardText">Pedidos, stock y documentación.</div>
         </div>
 
         <a class="button"
