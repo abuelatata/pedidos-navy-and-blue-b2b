@@ -53,6 +53,22 @@ console.log("Modo:", modo);
 console.log("Plantilla:", plantilla);
 
 </script>
+<script src="./js/plantillas-pedido/abuela_tata_comunion.js"></script>
+<script src="./js/plantillas-pedido/navy_blue_comunion.js"></script>
+
+<script>
+const plantillaActiva = window.PlantillasPedido?.[plantilla];
+
+if (plantillaActiva && typeof plantillaActiva.inicializar === "function") {
+    plantillaActiva.inicializar({
+        coleccion: coleccion,
+        modo: modo,
+        plantilla: plantilla
+    });
+} else {
+    console.error("No se encontró la plantilla de pedido:", plantilla);
+}
+</script>
 
 </body>
 </html>
