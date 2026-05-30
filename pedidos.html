@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedidos</title>
+</head>
+
+<body>
+
+<h1>Página de Pedidos</h1>
+
+<p id="coleccion"></p>
+<p id="modo"></p>
+<p id="plantilla"></p>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+const coleccion = params.get("coleccion");
+const modo = params.get("modo");
+const plantilla = params.get("plantilla");
+
+document.getElementById("coleccion").textContent =
+"Colección: " + coleccion;
+
+document.getElementById("modo").textContent =
+"Modo: " + modo;
+
+document.getElementById("plantilla").textContent =
+"Plantilla: " + plantilla;
+
+console.log("Colección:", coleccion);
+console.log("Modo:", modo);
+console.log("Plantilla:", plantilla);
+
+</script>
+
+</body>
+</html>
