@@ -58,7 +58,27 @@ console.log("Plantilla:", plantilla);
 
 <script>
 const plantillaActiva = window.PlantillasPedido?.[plantilla];
+async function cargarModelos() {
 
+    try {
+
+        const respuesta = await fetch(
+            `data/modelos/${coleccion}.json`
+        );
+
+        const modelos = await respuesta.json();
+
+        console.log("Modelos cargados:", modelos);
+
+    } catch(error) {
+
+        console.error("Error cargando modelos:", error);
+
+    }
+
+}
+
+cargarModelos();
 if (plantillaActiva && typeof plantillaActiva.inicializar === "function") {
     plantillaActiva.inicializar({
         coleccion: coleccion,
