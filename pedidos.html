@@ -73,25 +73,49 @@ async function cargarModelos() {
         console.log("Modelos cargados:", modelos);
 const contenedor = document.getElementById("modelosContainer");
 
-contenedor.innerHTML = "";
+contenedor.innerHTML += `
+<div class="producto-card">
 
-modelos.forEach(modelo => {
+    <div class="producto-foto">
+        <img src="${modelo.imagen}"
+             alt="${modelo.nombre}"
+             style="
+                width:220px;
+                border-radius:12px;
+                display:block;
+                margin:auto;
+             ">
+    </div>
 
-    contenedor.innerHTML += `
-        <div style="border:1px solid #ddd;
-                    padding:15px;
-                    margin:10px 0;
-                    border-radius:8px;">
+    <div class="producto-info">
 
-            <h3>${modelo.nombre}</h3>
+        <h3>${modelo.nombre}</h3>
 
-            <p>Referencia: ${modelo.referencia}</p>
+        <p>
+            <strong>Referencia:</strong>
+            ${modelo.referencia}
+        </p>
 
-            <p>Familia: ${modelo.familia}</p>
+        <p>
+            <strong>Familia:</strong>
+            ${modelo.familia}
+        </p>
 
-        </div>
-    `;
+        <p>
+            <strong>Modo:</strong>
+            ${modo}
+        </p>
 
+        <button onclick="
+            alert('Detalle de ${modelo.nombre}')
+        ">
+            Ver detalle
+        </button>
+
+    </div>
+
+</div>
+`;
 });
     } catch(error) {
 
