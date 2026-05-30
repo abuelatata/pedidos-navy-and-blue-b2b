@@ -72,7 +72,7 @@ async function cargarModelos() {
 
         console.log("Modelos cargados:", modelos);
 const contenedor = document.getElementById("modelosContainer");
-
+modelos.forEach(modelo => {
 contenedor.innerHTML += `
 <div class="producto-card">
 
