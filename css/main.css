@@ -916,10 +916,10 @@ text-align:center;
     align-items:flex-start;
   }
 
-  .button{
-    width:100%;
-    text-align:center;
-  }
+ .splash-content .button{
+  width:100%;
+  text-align:center;
+}
 
   .splash-content{
     width:min(94vw, 760px);
