@@ -255,7 +255,7 @@ console.log(
         </div>
 
         <a class="button"
-          href="pedidos.html?coleccion=${coleccion.id}&modo=${modoPrincipal}&plantilla=${plantillaActiva}">
+          href="campania.html?coleccion=${coleccion.id}&plantilla=${plantillaActiva}"
            Entrar →
         </a>
       `;
