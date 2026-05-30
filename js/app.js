@@ -250,7 +250,7 @@ console.log(
 
       card.innerHTML = `
         <div class="cardInfo">
-          <div class="cardTitle">${coleccion.nombre}</div>
+         <div class="cardTitle">${coleccion.marca} · ${coleccion.nombre}</div>
           <div class="cardText">${textoAccion} · ${textoEntrega}</div>
         </div>
 
