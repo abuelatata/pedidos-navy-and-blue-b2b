@@ -19,4 +19,24 @@
     "plantillaPedido": "navy_blue_comunion",
     "activo": true
   }
+  {
+  "id": "abuelatata-ceremonia-27",
+  "marca": "Abuela Tata",
+  "nombre": "Ceremonia 2027",
+  "temporada": "2027",
+  "tipo": "ceremonia",
+  "archivoModelos": "modelos/abuelatata-ceremonia-27.json",
+  "plantillaPedido": "abuela_tata_ceremonia",
+  "activo": true
+},
+{
+  "id": "abuelatata-verano-27",
+  "marca": "Abuela Tata",
+  "nombre": "Verano 2027",
+  "temporada": "2027",
+  "tipo": "verano",
+  "archivoModelos": "modelos/abuelatata-verano-27.json",
+  "plantillaPedido": "abuela_tata_verano",
+  "activo": true
+}
 ]
