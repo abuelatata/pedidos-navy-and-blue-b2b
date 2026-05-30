@@ -69,7 +69,28 @@ async function cargarModelos() {
         const modelos = await respuesta.json();
 
         console.log("Modelos cargados:", modelos);
+const contenedor = document.getElementById("modelosContainer");
 
+contenedor.innerHTML = "";
+
+modelos.forEach(modelo => {
+
+    contenedor.innerHTML += `
+        <div style="border:1px solid #ddd;
+                    padding:15px;
+                    margin:10px 0;
+                    border-radius:8px;">
+
+            <h3>${modelo.nombre}</h3>
+
+            <p>Referencia: ${modelo.referencia}</p>
+
+            <p>Familia: ${modelo.familia}</p>
+
+        </div>
+    `;
+
+});
     } catch(error) {
 
         console.error("Error cargando modelos:", error);
