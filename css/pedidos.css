@@ -25,7 +25,7 @@ body{
 
 .pedidos-header{
     background:var(--crema);
-    padding:34px 40px;
+    padding:30px 38px;
     border-bottom:1px solid var(--borde);
     box-shadow:0 8px 25px rgba(11,45,92,.08);
 }
@@ -42,7 +42,7 @@ body{
 .pedidos-header h1{
     margin:0;
     color:var(--azul);
-    font-size:34px;
+    font-size:32px;
     line-height:1.1;
 }
 
@@ -54,21 +54,21 @@ body{
 }
 
 .pedidos-layout{
-    padding:28px;
+    padding:24px;
 }
 
 .panel-info{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:16px;
-    margin-bottom:30px;
+    gap:14px;
+    margin-bottom:26px;
 }
 
 .info-card{
     background:white;
     border:1px solid var(--borde);
     border-radius:18px;
-    padding:18px;
+    padding:16px;
     box-shadow:0 8px 20px rgba(11,45,92,.06);
 }
 
@@ -81,7 +81,7 @@ body{
 
 .info-card strong{
     color:var(--azul);
-    font-size:16px;
+    font-size:15px;
 }
 
 .section-head{
@@ -104,63 +104,66 @@ body{
 
 .productos-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(310px,1fr));
-    gap:24px;
+    grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+    gap:20px;
 }
 
 .producto-card{
     background:white;
     border:1px solid var(--borde);
-    border-radius:24px;
+    border-radius:22px;
     overflow:hidden;
-    box-shadow:0 14px 35px rgba(11,45,92,.10);
+    box-shadow:0 12px 30px rgba(11,45,92,.10);
     transition:.25s ease;
 }
 
 .producto-card:hover{
-    transform:translateY(-5px);
-    box-shadow:0 18px 45px rgba(11,45,92,.16);
+    transform:translateY(-4px);
+    box-shadow:0 16px 42px rgba(11,45,92,.16);
 }
 
 .producto-imagen{
     background:#f7f3ec;
-    padding:18px;
+    padding:12px;
+    cursor:pointer;
 }
 
 .producto-imagen img{
     width:100%;
-    height:360px;
+    height:260px;
     object-fit:cover;
-    border-radius:18px;
+    border-radius:16px;
     display:block;
 }
 
 .producto-contenido{
-    padding:20px;
+    padding:16px;
 }
 
 .producto-top{
     display:flex;
     justify-content:space-between;
-    gap:10px;
+    gap:8px;
     align-items:center;
     margin-bottom:12px;
 }
 
 .producto-familia{
-    font-size:12px;
+    font-size:11px;
     color:var(--gris);
     background:#f3f4f6;
-    padding:7px 10px;
+    padding:6px 9px;
     border-radius:999px;
+    white-space:nowrap;
 }
 
 .estado-servicio{
-    font-size:11px;
-    font-weight:700;
-    padding:7px 10px;
+    font-size:10px;
+    font-weight:800;
+    padding:6px 9px;
     border-radius:999px;
     text-transform:uppercase;
+    white-space:nowrap;
 }
 
 .servicio-inmediato{
@@ -174,41 +177,23 @@ body{
 }
 
 .producto-contenido h3{
-    margin:0 0 8px;
+    margin:0 0 6px;
     color:var(--azul);
-    font-size:22px;
+    font-size:18px;
+    line-height:1.2;
 }
 
 .referencia{
-    margin:0 0 16px;
+    margin:0 0 8px;
     color:var(--gris);
-    font-size:14px;
-}
-
-.producto-datos{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-    margin-bottom:18px;
-}
-
-.producto-datos div{
-    border:1px solid var(--borde);
-    border-radius:14px;
-    padding:12px;
-    background:#fcfaf7;
-}
-
-.producto-datos span{
-    display:block;
-    font-size:11px;
-    color:var(--gris);
-    margin-bottom:5px;
-}
-
-.producto-datos strong{
     font-size:13px;
+}
+
+.producto-precio{
+    margin:0 0 13px;
     color:var(--azul);
+    font-size:20px;
+    font-weight:800;
 }
 
 .producto-acciones{
@@ -225,9 +210,9 @@ button{
 .btn-secundario{
     border:none;
     border-radius:14px;
-    padding:13px 16px;
+    padding:12px 15px;
     cursor:pointer;
-    font-weight:700;
+    font-weight:800;
     transition:.2s ease;
 }
 
@@ -258,12 +243,98 @@ button{
     box-shadow:0 8px 20px rgba(0,0,0,.06);
 }
 
+.visor-foto{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.88);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+    padding:24px;
+}
+
+.visor-foto.activo{
+    display:flex;
+}
+
+.visor-contenido{
+    position:relative;
+    max-width:94vw;
+    max-height:92vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+.visor-foto img{
+    max-width:90vw;
+    max-height:78vh;
+    object-fit:contain;
+    border-radius:18px;
+    background:white;
+    box-shadow:0 18px 60px rgba(0,0,0,.35);
+}
+
+.visor-cerrar{
+    position:absolute;
+    top:18px;
+    right:24px;
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    border:none;
+    font-size:30px;
+    line-height:44px;
+    cursor:pointer;
+    background:white;
+    color:var(--azul);
+    z-index:10000;
+}
+
+.visor-info{
+    margin-top:14px;
+    background:white;
+    border-radius:18px;
+    padding:14px 18px;
+    min-width:280px;
+    max-width:420px;
+    text-align:center;
+}
+
+.visor-info h3{
+    margin:0 0 6px;
+    color:var(--azul);
+    font-size:20px;
+}
+
+.visor-info p{
+    margin:0 0 8px;
+    color:var(--gris);
+}
+
+.visor-info strong{
+    color:var(--azul);
+    font-size:20px;
+}
+
 .tema-navy-blue{
     background:linear-gradient(180deg,#eef4ff 0%,#f8fafc 100%);
 }
 
 .tema-abuela-tata{
     background:linear-gradient(180deg,#f8f5ef 0%,#f3f6fa 100%);
+}
+
+@media(max-width:1100px){
+    .productos-grid{
+        grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+    }
+
+    .producto-imagen img{
+        height:240px;
+    }
 }
 
 @media(max-width:900px){
@@ -290,10 +361,23 @@ button{
     }
 
     .producto-imagen img{
-        height:300px;
+        height:330px;
     }
 
     .pedidos-header h1{
         font-size:27px;
+    }
+
+    .producto-contenido h3{
+        font-size:20px;
+    }
+
+    .producto-precio{
+        font-size:22px;
+    }
+
+    .visor-info{
+        min-width:auto;
+        width:90vw;
     }
 }
