@@ -56,6 +56,26 @@
 
 </main>
 
+<div id="visorFoto" class="visor-foto">
+    <button id="cerrarVisor" class="visor-cerrar" type="button">×</button>
+
+    <div class="visor-contenido">
+        <img id="visorImagen" src="" alt="">
+
+        <div class="visor-info">
+            <h3 id="visorNombre"></h3>
+            <p id="visorReferencia"></p>
+            <strong id="visorPrecio"></strong>
+        </div>
+    </div>
+</div>
+
+<script src="./js/plantillas-pedido/abuela_tata_comunion.js"></script>
+<script src="./js/plantillas-pedido/navy_blue_comunion.js"></script>
+<script src="./js/pedido-core.js"></script>
+<script src="./js/motores/abuela-tata-comunion.js"></script>
+<script src="./js/pedidos.js"></script>
+
 <script>
 const params = new URLSearchParams(window.location.search);
 
@@ -72,6 +92,42 @@ function formatearFecha(fecha) {
         year: "numeric"
     });
 }
+
+function formatearPrecio(valor) {
+    if (valor === undefined || valor === null || valor === "") {
+        return "Precio no indicado";
+    }
+
+    if (typeof valor === "string") {
+        return valor.includes("€") ? valor : `${valor} €`;
+    }
+
+    return `${valor} €`;
+}
+
+function abrirFoto(imagen, nombre, referencia, precio) {
+    document.getElementById("visorImagen").src = imagen || "";
+    document.getElementById("visorImagen").alt = nombre || "";
+    document.getElementById("visorNombre").textContent = nombre || "";
+    document.getElementById("visorReferencia").textContent = referencia ? `Ref. ${referencia}` : "";
+    document.getElementById("visorPrecio").textContent = precio || "";
+    document.getElementById("visorFoto").classList.add("activo");
+}
+
+function cerrarFoto() {
+    document.getElementById("visorFoto").classList.remove("activo");
+}
+
+document.getElementById("visorFoto").addEventListener("click", cerrarFoto);
+
+document.getElementById("cerrarVisor").addEventListener("click", function(event) {
+    event.stopPropagation();
+    cerrarFoto();
+});
+
+document.querySelector(".visor-contenido").addEventListener("click", function(event) {
+    event.stopPropagation();
+});
 
 document.getElementById("coleccion").textContent = coleccion || "-";
 document.getElementById("modo").textContent = modo || "-";
@@ -98,18 +154,6 @@ if (plantilla === "navy_blue_comunion") {
         "Marineros, almirantes y complementos con control de stock y fabricación.";
 }
 
-console.log("Colección:", coleccion);
-console.log("Modo:", modo);
-console.log("Plantilla:", plantilla);
-</script>
-
-<script src="./js/plantillas-pedido/abuela_tata_comunion.js"></script>
-<script src="./js/plantillas-pedido/navy_blue_comunion.js"></script>
-<script src="./js/pedido-core.js"></script>
-<script src="./js/motores/abuela-tata-comunion.js"></script>
-<script src="./js/pedidos.js"></script>
-
-<script>
 const plantillaActiva = window.PlantillasPedido?.[plantilla];
 
 async function cargarModelos() {
@@ -121,8 +165,6 @@ async function cargarModelos() {
         }
 
         const modelos = await respuesta.json();
-
-        console.log("Modelos cargados:", modelos);
 
         const contenedor = document.getElementById("modelosContainer");
         contenedor.innerHTML = "";
@@ -136,57 +178,60 @@ async function cargarModelos() {
                 ? "servicio-inmediato"
                 : "servicio-fabricacion";
 
-            contenedor.innerHTML += `
-                <article class="producto-card">
+            const imagen = modelo.imagen || "";
+            const nombre = modelo.nombre || "Modelo";
+            const referencia = modelo.referencia || "-";
+            const familia = modelo.familia || "-";
+            const precio = formatearPrecio(modelo.precio);
 
-                    <div class="producto-imagen">
-                        <img src="${modelo.imagen}" alt="${modelo.nombre}">
+            const card = document.createElement("article");
+            card.className = "producto-card";
+
+            card.innerHTML = `
+                <div class="producto-imagen">
+                    <img src="${imagen}" alt="${nombre}">
+                </div>
+
+                <div class="producto-contenido">
+
+                    <div class="producto-top">
+                        <span class="producto-familia">
+                            Familia ${familia}
+                        </span>
+
+                        <span class="estado-servicio ${servicioClase}">
+                            ${servicioTexto}
+                        </span>
                     </div>
 
-                    <div class="producto-contenido">
+                    <h3>${nombre}</h3>
 
-                        <div class="producto-top">
-                            <span class="producto-familia">
-                                Familia ${modelo.familia || "-"}
-                            </span>
+                    <p class="referencia">
+                        Ref. ${referencia}
+                    </p>
 
-                            <span class="estado-servicio ${servicioClase}">
-                                ${servicioTexto}
-                            </span>
-                        </div>
+                    <p class="producto-precio">
+                        ${precio}
+                    </p>
 
-                        <h3>${modelo.nombre}</h3>
-
-                        <p class="referencia">
-                            Ref. ${modelo.referencia}
-                        </p>
-
-                        <div class="producto-datos">
-                            <div>
-                                <span>Fecha pedido</span>
-                                <strong>${formatearFecha(fechaPedido)}</strong>
-                            </div>
-
-                            <div>
-                                <span>Servicio</span>
-                                <strong>${servicioTexto}</strong>
-                            </div>
-                        </div>
-
-                        <div class="producto-acciones">
-                            <button class="btn-secundario" onclick="alert('Detalle de ${modelo.nombre}')">
-                                Ver detalle
-                            </button>
-
-                            <button class="btn-principal" onclick="alert('Añadir ${modelo.nombre} al pedido')">
-                                Añadir al pedido
-                            </button>
-                        </div>
-
+                    <div class="producto-acciones">
+                        <button class="btn-principal" type="button">
+                            Añadir al pedido
+                        </button>
                     </div>
 
-                </article>
+                </div>
             `;
+
+            card.querySelector(".producto-imagen").addEventListener("click", function() {
+                abrirFoto(imagen, nombre, referencia, precio);
+            });
+
+            card.querySelector(".btn-principal").addEventListener("click", function() {
+                alert(`Añadir ${nombre} al pedido`);
+            });
+
+            contenedor.appendChild(card);
         });
 
     } catch(error) {
