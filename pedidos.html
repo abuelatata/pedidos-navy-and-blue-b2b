@@ -3,137 +3,211 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pedidos</title>
- <link rel="stylesheet" href="css/pedidos.css">   
+<title>Pedidos · Área Profesional B2B</title>
+<link rel="stylesheet" href="css/pedidos.css">
 </head>
 
 <body>
 
-<h1>Página de Pedidos</h1>
+<header class="pedidos-header">
+    <div>
+        <p class="eyebrow">Área Profesional B2B</p>
+        <h1 id="tituloPedidos">Pedidos</h1>
+        <p class="subtitulo" id="descripcionPedidos">
+            Selecciona productos, consulta disponibilidad y prepara el pedido.
+        </p>
+    </div>
+</header>
 
-<p id="coleccion"></p>
-<p id="modo"></p>
-<p id="plantilla"></p>
-<div id="modelosContainer"></div>
+<main class="pedidos-layout">
+
+    <section class="panel-info">
+        <div class="info-card">
+            <span>Colección</span>
+            <strong id="coleccion">-</strong>
+        </div>
+
+        <div class="info-card">
+            <span>Modo</span>
+            <strong id="modo">-</strong>
+        </div>
+
+        <div class="info-card">
+            <span>Plantilla</span>
+            <strong id="plantilla">-</strong>
+        </div>
+
+        <div class="info-card">
+            <span>Fecha pedido</span>
+            <strong id="fechaPedido">-</strong>
+        </div>
+    </section>
+
+    <section class="productos-section">
+        <div class="section-head">
+            <div>
+                <h2>Modelos disponibles</h2>
+                <p>Consulta stock, repetición o fabricación según campaña.</p>
+            </div>
+        </div>
+
+        <div id="modelosContainer" class="productos-grid"></div>
+    </section>
+
+</main>
+
 <script>
-
 const params = new URLSearchParams(window.location.search);
 
 const coleccion = params.get("coleccion");
 const modo = params.get("modo");
 const plantilla = params.get("plantilla");
+
+const fechaPedido = new Date();
+
+function formatearFecha(fecha) {
+    return fecha.toLocaleDateString("es-ES", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+    });
+}
+
+document.getElementById("coleccion").textContent = coleccion || "-";
+document.getElementById("modo").textContent = modo || "-";
+document.getElementById("plantilla").textContent = plantilla || "-";
+document.getElementById("fechaPedido").textContent = formatearFecha(fechaPedido);
+
 if (plantilla === "abuela_tata_comunion") {
-    document.body.style.background = "#f5f5f5";
+    document.body.classList.add("tema-abuela-tata");
 
-    const titulo = document.querySelector("h1");
-    titulo.textContent = "Pedidos Abuela Tata Comunión 2027";
+    document.getElementById("tituloPedidos").textContent =
+        "Pedidos Abuela Tata · Comunión 2027";
 
-    console.log("Cargando plantilla Abuela Tata");
+    document.getElementById("descripcionPedidos").textContent =
+        "Vestidos de comunión, tiaras y lazadas con stock inmediato o fabricación bajo pedido.";
 }
 
 if (plantilla === "navy_blue_comunion") {
-    document.body.style.background = "#eef4ff";
+    document.body.classList.add("tema-navy-blue");
 
-    const titulo = document.querySelector("h1");
-    titulo.textContent = "Pedidos Navy & Blue Comunión 2027";
+    document.getElementById("tituloPedidos").textContent =
+        "Pedidos Navy & Blue · Comunión 2027";
 
-    console.log("Cargando plantilla Navy & Blue");
+    document.getElementById("descripcionPedidos").textContent =
+        "Marineros, almirantes y complementos con control de stock y fabricación.";
 }
-  
-document.getElementById("coleccion").textContent =
-"Colección: " + coleccion;
-
-document.getElementById("modo").textContent =
-"Modo: " + modo;
-
-document.getElementById("plantilla").textContent =
-"Plantilla: " + plantilla;
 
 console.log("Colección:", coleccion);
 console.log("Modo:", modo);
 console.log("Plantilla:", plantilla);
-
 </script>
+
 <script src="./js/plantillas-pedido/abuela_tata_comunion.js"></script>
 <script src="./js/plantillas-pedido/navy_blue_comunion.js"></script>
 <script src="./js/pedido-core.js"></script>
 <script src="./js/motores/abuela-tata-comunion.js"></script>
 <script src="./js/pedidos.js"></script>
+
 <script>
 const plantillaActiva = window.PlantillasPedido?.[plantilla];
+
 async function cargarModelos() {
-
     try {
+        const respuesta = await fetch(`data/modelos/${coleccion}.json`);
 
-        const respuesta = await fetch(
-            `data/modelos/${coleccion}.json`
-        );
+        if (!respuesta.ok) {
+            throw new Error("No se pudo cargar el JSON de modelos");
+        }
 
         const modelos = await respuesta.json();
 
         console.log("Modelos cargados:", modelos);
-       
-const contenedor = document.getElementById("modelosContainer");
-modelos.forEach(modelo => {
-   
-contenedor.innerHTML += `
-<div class="producto-card">
 
-    <div class="producto-foto">
-        <img src="${modelo.imagen}"
-             alt="${modelo.nombre}"
-             style="
-                width:220px;
-                border-radius:12px;
-                display:block;
-                margin:auto;
-             ">
-    </div>
+        const contenedor = document.getElementById("modelosContainer");
+        contenedor.innerHTML = "";
 
-    <div class="producto-info">
+        modelos.forEach(modelo => {
+            const servicioTexto = modo === "stock"
+                ? "Servicio inmediato"
+                : "Fabricación / repetición";
 
-        <h3>${modelo.nombre}</h3>
+            const servicioClase = modo === "stock"
+                ? "servicio-inmediato"
+                : "servicio-fabricacion";
 
-        <p>
-            <strong>Referencia:</strong>
-            ${modelo.referencia}
-        </p>
+            contenedor.innerHTML += `
+                <article class="producto-card">
 
-        <p>
-            <strong>Familia:</strong>
-            ${modelo.familia}
-        </p>
+                    <div class="producto-imagen">
+                        <img src="${modelo.imagen}" alt="${modelo.nombre}">
+                    </div>
 
-        <p>
-            <strong>Modo:</strong>
-            ${modo}
-        </p>
+                    <div class="producto-contenido">
 
-        <button onclick="
-            alert('Detalle de ${modelo.nombre}')
-        ">
-            Ver detalle
-        </button>
+                        <div class="producto-top">
+                            <span class="producto-familia">
+                                Familia ${modelo.familia || "-"}
+                            </span>
 
-    </div>
+                            <span class="estado-servicio ${servicioClase}">
+                                ${servicioTexto}
+                            </span>
+                        </div>
 
-</div>
-`;
-});
+                        <h3>${modelo.nombre}</h3>
+
+                        <p class="referencia">
+                            Ref. ${modelo.referencia}
+                        </p>
+
+                        <div class="producto-datos">
+                            <div>
+                                <span>Fecha pedido</span>
+                                <strong>${formatearFecha(fechaPedido)}</strong>
+                            </div>
+
+                            <div>
+                                <span>Servicio</span>
+                                <strong>${servicioTexto}</strong>
+                            </div>
+                        </div>
+
+                        <div class="producto-acciones">
+                            <button class="btn-secundario" onclick="alert('Detalle de ${modelo.nombre}')">
+                                Ver detalle
+                            </button>
+
+                            <button class="btn-principal" onclick="alert('Añadir ${modelo.nombre} al pedido')">
+                                Añadir al pedido
+                            </button>
+                        </div>
+
+                    </div>
+
+                </article>
+            `;
+        });
+
     } catch(error) {
-
         console.error("Error cargando modelos:", error);
 
+        document.getElementById("modelosContainer").innerHTML = `
+            <div class="error-card">
+                No se han podido cargar los modelos de esta colección.
+            </div>
+        `;
     }
-
 }
 
 cargarModelos();
+
 if (plantillaActiva && typeof plantillaActiva.inicializar === "function") {
     plantillaActiva.inicializar({
-        coleccion: coleccion,
-        modo: modo,
-        plantilla: plantilla
+        coleccion,
+        modo,
+        plantilla,
+        fechaPedido: formatearFecha(fechaPedido)
     });
 } else {
     console.error("No se encontró la plantilla de pedido:", plantilla);
